@@ -32,7 +32,7 @@ RUN passwd -d dev
 
 RUN echo "dev ALL=(ALL) ALL" > /etc/sudoers
 
-WORKDIR /home/wwwroot/
+WORKDIR /home/www/sf4
 ##</romaricp>##
 
 EXPOSE 9000
