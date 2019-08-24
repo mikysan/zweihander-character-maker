@@ -41,9 +41,11 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 * Elaborate Primary Attribute bonuses after get Ancestry
 * Elaborate Secondary Attributes accordingly
 * allow to choose if roll Alignment separately
+* allow to choose if roll for a Drowback and update Fate Point accordingly
 * allow to save generate characters
 * allow to export character pdf sheet
 * add character RESTish interface
+* add multilanguage (?)
 
 ## Built With
 
