@@ -89,7 +89,7 @@ class RollCharacterCommand extends Command
         $io->writeln(sprintf('Age group: <info>%s</info>', $newCharacter->getAgeGroupName()));
         if ($newCharacter->hasDistinguishingMarks()) {
             $io->writeln('Distinguishing marks:');
-            $io->listing($newCharacter->getDistinguishingMarkValues()->toArray());
+            $io->listing($newCharacter->getDistinguishingMark());
         }
         $io->writeln(sprintf('Complexion: <info>%s</info>', $newCharacter->getComplexionName()));
         $io->writeln(sprintf('Build type : <info>%s</info> (%s%% price modifier)', $newCharacter->getBuildType()->getName(), $newCharacter->getBuildType()->getPriceModifier() * 100));

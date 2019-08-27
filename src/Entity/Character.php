@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
@@ -58,7 +56,7 @@ class Character
     private $complexion;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\DistinguishingMark")
+     * @ORM\Column(type="json")
      */
     private $distinguishingMarks;
 
@@ -257,7 +255,8 @@ class Character
         int $willpower,
         int $fellowship,
         string $trappings,
-        Armor $armor
+        Armor $armor,
+        ?string $name = null
     )
     {
         $this->ageGroup = $ageGroup;
@@ -265,7 +264,7 @@ class Character
         $this->buildType = $buildType;
         $this->chaosAlignment = $chaosAlignment;
         $this->complexion = $complexion;
-        $this->distinguishingMarks = new ArrayCollection($distinguishingMarks);
+        $this->distinguishingMarks = $distinguishingMarks;
         $this->dooming = $dooming;
         $this->drawback = $drawback;
         $this->eyeColor = $eyeColor;
@@ -312,6 +311,45 @@ class Character
 
         // Elaborate FatePoints
         $this->fatePoints = $drawback ? 2 : 1;
+
+        $this->name = $name;
+    }
+
+    public function dumpFactoryArguments(): array
+    {
+        return [
+            'id' => $this->id,
+            'ancestry' => $this->ancestry->getId(),
+            'ancestralTrait' => $this->ancestralTrait->getId(),
+            'sex' => $this->sex,
+            'profession' => $this->profession->getId(),
+            'buildType' => $this->buildType->getId(),
+            'complexion' => $this->complexion->getId(),
+            'eyeColor' => $this->eyeColor->getId(),
+            'hairColor' => $this->hairColor->getId(),
+            'height' => $this->height->getId(),
+            'weight' => $this->weight->getId(),
+            'ageGroup' => $this->ageGroup->getId(),
+            'distinguishingMarks' => json_encode($this->distinguishingMarks),
+            'seasonOfBirth' => $this->seasonOfBirth->getId(),
+            'dooming' => $this->dooming->getId(),
+            'chaosAlignment' => $this->chaosAlignment->getId(),
+            'orderAlignment' => $this->orderAlignment->getId(),
+            'drawback' => $this->drawback ? $this->drawback->getId() : null,
+            'socialClass' => $this->socialClass->getId(),
+            'upbringing' => $this->upbringing->getId(),
+            'combat' => $this->combat,
+            'brawn' => $this->brawn,
+            'agility' => $this->agility,
+            'perception' => $this->perception,
+            'intelligence' => $this->intelligence,
+            'willpower' => $this->willpower,
+            'fellowship' => $this->fellowship,
+            'trappings' => $this->trappings,
+            'armor' => $this->armor->getId(),
+            'name' => $this->name
+        ];
+
     }
 
     /**
@@ -386,19 +424,17 @@ class Character
 
     public function hasDistinguishingMarks(): bool
     {
-        return $this->distinguishingMarks->isEmpty();
+        return 0 !== count($this->distinguishingMarks);
     }
 
     /**
      * @Serializer\Groups("view")
      * @Serializer\SerializedName("distinguishingMarks")
-     * @return Collection|string[]
+     * @return string[]
      */
-    public function getDistinguishingMarkValues(): Collection
+    public function getDistinguishingMark(): ?array
     {
-        return $this->distinguishingMarks->map(function (DistinguishingMark $distinguishingMark) {
-            return $distinguishingMark->getName();
-        });
+        return $this->distinguishingMarks;
     }
 
     /**

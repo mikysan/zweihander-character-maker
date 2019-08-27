@@ -52,11 +52,11 @@ class CharacterService
         $distinguishingMarks = [];
         for ($i = 0; $i < $ageGroup->getDistinguishingMarkCoefficient(); $i++) {
             $distinguishingMark = $this->entityManager->getRepository(DistinguishingMark::class)->findByRoll();
-            if (in_array($distinguishingMark, $distinguishingMarks)) {
+            if (in_array($distinguishingMark->getName(), $distinguishingMarks)) {
                 $i--;
                 continue;
             }
-            $distinguishingMarks[] = $distinguishingMark;
+            $distinguishingMarks[] = $distinguishingMark->getName();
         }
         $buildType = $this->entityManager->getRepository(BuildType::class)->findByRoll();
         $hwRoll = null;
