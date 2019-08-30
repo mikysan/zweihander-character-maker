@@ -36,15 +36,12 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 * add cs fixer
 * add tests
 * allow user to apply Mercy Rule dynamically
-* allow user to see roll results
 * allow to choose "Random" choice between human or demi-human (this should be also the default option)
-* Elaborate Primary Attribute bonuses after get Ancestry
-* Elaborate Secondary Attributes accordingly
-* allow to choose if roll Alignment separately
-* allow to choose if roll for a Drowback and update Fate Point accordingly
-* allow to save generate characters
+* add trappings
+* roll cash
 * allow to export character pdf sheet
 * add character RESTish interface
+* add switch from metric system to imperial system (?)
 * add multilanguage (?)
 
 ## Built With

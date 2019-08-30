@@ -22,7 +22,7 @@ class AncestryModifier
     private $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ancestry")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ancestry", inversedBy="ancestryModifiers")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ancestry;
@@ -43,13 +43,6 @@ class AncestryModifier
         return $this->value;
     }
 
-    public function setValue(int $value): self
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
     public function getAncestry(): ?Ancestry
     {
         return $this->ancestry;
@@ -59,5 +52,4 @@ class AncestryModifier
     {
         return $this->primaryAttribute;
     }
-
 }

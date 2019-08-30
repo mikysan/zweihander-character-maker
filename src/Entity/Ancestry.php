@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +25,16 @@ class Ancestry
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AncestryModifier", mappedBy="ancestry", orphanRemoval=true)
+     */
+    private $ancestryModifiers;
+
+    public function __construct()
+    {
+        $this->ancestryModifiers = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,5 +43,13 @@ class Ancestry
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|AncestryModifier[]
+     */
+    public function getAncestryModifiers(): Collection
+    {
+        return $this->ancestryModifiers;
     }
 }
