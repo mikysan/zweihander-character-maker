@@ -39,14 +39,14 @@ class CharacterService
         $this->entityManager = $entityManager;
     }
 
-    public function rollNew(bool $rollDrawback = true, bool $rollForAncestry = false, bool $unlinkAlignment = false): Character
+    public function rollNew(bool $rollDrawback = true, bool $rollAncestry = false, bool $unlinkAlignment = false): Character
     {
         $primaryAttributes = [];
         foreach ($this->entityManager->getRepository(PrimaryAttribute::class)->findAll() as $primaryAttribute) {
             $primaryAttributes[strtolower($primaryAttribute->getName())] = $primaryAttribute->calcPseudoRandomValue();
         }
         $ancestryRepository = $this->entityManager->getRepository(Ancestry::class);
-        $ancestry = $rollForAncestry ? $ancestryRepository->findByRoll() : $ancestryRepository->findOneBy(['name' => 'Human']);
+        $ancestry = $rollAncestry ? $ancestryRepository->findByRoll() : $ancestryRepository->findOneBy(['name' => 'Human']);
         $seasonOfBirth = $this->entityManager->getRepository(Season::class)->findByRoll();
         $ageGroup = $this->entityManager->getRepository(AgeGroup::class)->findByRoll();
         $distinguishingMarks = [];

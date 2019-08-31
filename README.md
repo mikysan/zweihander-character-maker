@@ -35,12 +35,14 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 
 * add cs fixer
 * add tests
-* allow user to apply Mercy Rule dynamically
-* allow to choose "Random" choice between human or demi-human (this should be also the default option)
+* allow user to apply Mercy Rule by CLI
+* allow to choose "Random" choice between human or demi-human (this should be also the default option) by CLI
+* add REST POST Endpoint to save character
 * add trappings
-* roll cash
-* allow to export character pdf sheet
-* add character RESTish interface
+* add roll character cash
+* add consider talent, trait or magick modifier to secondary attribute
+* add armor’s Damage Threshold Modifier
+* add export character pdf sheet
 * add switch from metric system to imperial system (?)
 * add multilanguage (?)
 
