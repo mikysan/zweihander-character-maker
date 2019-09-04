@@ -3,8 +3,6 @@ services:
     apache:
         build: .docker/apache
         container_name: sf4_apache
-        ports:
-          - 80:80
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
           - .:/home/www/sf4
@@ -22,8 +20,6 @@ services:
             MYSQL_DATABASE: sf4
             MYSQL_USER: sf4
             MYSQL_PASSWORD: sf4
-        ports:
-          - '3306:3306'
 
     php:
         build: .docker/php

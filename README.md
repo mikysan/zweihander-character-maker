@@ -8,6 +8,25 @@ To generate a character you can simply run this command:
 ```
 docker exec -it -u dev sf4_php bin/console app:roll:character
 ```
+You can add several flag to the command, use the `--help` to learn about those.
+
+Alternately you can use the endpoints:
+- get an Index of saved characters
+```http request
+GET /character
+```
+- get detail of a specific character
+```http request
+GET /character/{id}
+```
+- get detail of a random generated character
+```http request
+GET /character/roll-new
+```
+- _(coming soon)_ Save a character
+```http request
+POST /character
+```
 
 ### Prerequisites
 
@@ -16,20 +35,27 @@ You'll need [Docker](https://www.docker.com/) in order to make this work.
 ### Installing
 
 After cloning this repository or downloading its ZIP version open a terminal and go into the repository directory.
-Now you need to run the docker container, you can achieve this by running the following command:
+Firstly create the needed docker configuration
+```shell script
+cp docker-compose.override.yml.dist docker-compose.override.yml 
 ```
+_(optionally adjust the configuration as you like)_
+
+Now you need to run the docker container, you can achieve this by running the following command:
+```shell script
 docker-compose up -d
 ```
 
 You can now install any software dependencies by running the following command:
-```
+```shell script
 docker exec -it -u dev sf4_php composer install
 ```
 
 Lastly run the doctrine migrations:
-```
+```shell script
 docker exec -it -u dev sf4_php bin/console d:m:m
 ```
+> You may need to run `docker exec -it -u dev sf4_php php bin/console d:m:m` with the explicitly use of *php* binary, if so you will need to do so any time you will use the `bin/console` commands.
 
 ## TODO
 

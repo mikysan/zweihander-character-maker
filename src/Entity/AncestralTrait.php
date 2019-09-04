@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AncestralTraitRepository")
  */
-class AncestralTrait
+class AncestralTrait implements TraitInterface
 {
     use d100Trait;
 
@@ -20,11 +21,13 @@ class AncestralTrait
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups("view")
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Serializer\Groups("view")
      */
     private $effect;
 

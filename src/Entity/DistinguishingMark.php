@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DistinguishingMarkRepository")
@@ -20,6 +21,7 @@ class DistinguishingMark
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups("view")
      */
     private $name;
 

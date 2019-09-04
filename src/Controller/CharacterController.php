@@ -22,7 +22,13 @@ class CharacterController extends AbstractController
      */
     public function index(EntityManagerInterface $entityManager)
     {
-        return $this->json($entityManager->getRepository(Character::class)->findAll(), Response::HTTP_OK, [], ['index' => true]);
+        return $this->json($entityManager->getRepository(Character::class)->findAll(), Response::HTTP_OK, [], [
+            'groups' => ['index'],
+// todo improve or possibly remove this
+//            'circular_reference_handler' => function ($object) {
+//                return null;
+//            }
+        ]);
     }
 
     /**
@@ -34,7 +40,7 @@ class CharacterController extends AbstractController
             $request->query->has('roll-drawback'),
             $request->query->has('roll-ancestry'),
             $request->query->has('unlink-alignment')
-        ));
+        ), Response::HTTP_OK, [], ['groups' => ['view']]);
     }
 
     /**
@@ -50,6 +56,6 @@ class CharacterController extends AbstractController
      */
     public function show(Character $character)
     {
-        return $this->json($character);
+        return $this->json($character, Response::HTTP_OK, [], ['groups' => ['view']]);
     }
 }

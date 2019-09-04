@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation as Serializer;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CharacterRepository")
@@ -16,193 +18,227 @@ class Character
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"index", "view"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeGroup")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups({"index", "view"})
      */
     private $ageGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ancestry")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups({"index", "view"})
      */
     private $ancestry;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\BuildType")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups({"index", "view"})
      */
     private $buildType;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ChaosAlignment")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $chaosAlignment;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Complexion")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $complexion;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\DistinguishingMark")
+     * @Serializer\Groups("view")
      */
     private $distinguishingMarks;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Dooming")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $dooming;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Drawback")
+     * @Serializer\Groups("view")
      */
     private $drawback;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\EyeColor")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $eyeColor;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\HairColor")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $hairColor;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Height")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $height;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\OrderAlignment")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $orderAlignment;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Profession")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups({"index", "view"})
      */
     private $profession;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Season")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $seasonOfBirth;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SocialClass")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $socialClass;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Upbringing")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $upbringing;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Weight")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $weight;
 
     /**
-     * @ORM\Column(type="string",
-     *      length=1)
+     * @ORM\Column(type="string", length=1)
+     * @Serializer\Groups({"index", "view"})
      */
     private $sex;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AncestralTrait")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Groups("view")
      */
     private $ancestralTrait;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $combat;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $brawn;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $agility;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $perception;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $intelligence;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $willpower;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $fellowship;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $combatBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $brawnBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $agilityBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $perceptionBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $intelligenceBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $willpowerBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $fellowshipBonus;
 
     /**
      * @ORM\Column(type="integer")
+     * @Serializer\Groups("view")
      */
     private $fatePoints;
 
@@ -467,30 +503,45 @@ class Character
     }
 
     // todo consider add talent, trait or magick modifier
+    /**
+     * @Serializer\Groups("view")
+     */
     public function getPerilThreshold(): ?int
     {
         return 3 + $this->getWillpowerBonus();
     }
 
     // todo add armor’s Damage Threshold Modifier
+    /**
+     * @Serializer\Groups("view")
+     */
     public function getDamageThreshold(): ?int
     {
         return $this->getBrawnBonus();
     }
 
     // todo consider add talent, trait or magick modifier
+    /**
+     * @Serializer\Groups("view")
+     */
     public function getEncumbranceLimit(): ?int
     {
         return 3 + $this->getBrawnBonus();
     }
 
     // todo consider add talent, trait or magick modifier
+    /**
+     * @Serializer\Groups("view")
+     */
     public function getInitiative(): ?int
     {
         return 3 + $this->getPerceptionBonus();
     }
 
     // todo consider add talent, trait or magick modifier
+    /**
+     * @Serializer\Groups("view")
+     */
     public function getMovement(): ?int
     {
         return 3 + $this->getAgilityBonus();
