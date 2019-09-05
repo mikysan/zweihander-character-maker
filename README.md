@@ -19,11 +19,11 @@ GET /character
 ```http request
 GET /character/{id}
 ```
-- get detail of a random generated character
+- get detail of a random generated character, send also a custom header 'X-Character-Token' which is required to save the new character.
 ```http request
 GET /character/roll-new
 ```
-- _(coming soon)_ Save a character
+- Save a random generated character, you have to set a name in the body payload and sent back the 'X-Character-Token' header.
 ```http request
 POST /character
 ```
