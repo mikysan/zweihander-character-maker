@@ -62,15 +62,14 @@ class RollCharacterCommand extends Command
         ]);
 
         $io->title('Step III: Sex & Race');
-        $io->writeln(sprintf('<info>%s %s</info>', Character::GENDERS[$newCharacter->getSex()], $newCharacter->getAncestry()->getName()));
+        $io->writeln(sprintf('<info>%s %s</info>', Character::GENDERS[$newCharacter->getSex()], $newCharacter->getAncestryName()));
         $io->section('Ancestral trait');
         $io->writeln('<info>' . $newCharacter->getAncestralTrait()->getName() . '</info>');
         $io->writeln('effect: ' . $newCharacter->getAncestralTrait()->getEffect());
 
         $io->title('Step IV: Archetype & Profession');
         $io->listing([
-            sprintf('Archetype: <info>%s</info>', $newCharacter->getProfession()->getArchetype()->getName()),
-            sprintf('Profession: <info>%s</info>', $newCharacter->getProfession()->getName()),
+            sprintf('Profession: <info>%s</info>', $newCharacter->getProfessionName()),
         ]);
         $io->note('Check Trappings on manual');
 
@@ -85,23 +84,21 @@ class RollCharacterCommand extends Command
         $io->note('Consider this value can be modified by talent, trait or magick and armor’s Damage Threshold Modifier');
 
         $io->title('Step VI: Background');
-        $io->writeln(sprintf('Season of birth: <info>%s</info>', $newCharacter->getSeasonOfBirth()->getName()));
-        $io->writeln(sprintf('Dooming: <info>%s</info>', $newCharacter->getDooming()->getName()));
-        $io->writeln(sprintf('Age group: <info>%s</info>', $newCharacter->getAgeGroup()->getName()));
-        if (count($newCharacter->getDistinguishingMarks()) !== 0) {
+        $io->writeln(sprintf('Season of birth: <info>%s</info>', $newCharacter->getSeasonOfBirthName()));
+        $io->writeln(sprintf('Dooming: <info>%s</info>', $newCharacter->getDoomingName()));
+        $io->writeln(sprintf('Age group: <info>%s</info>', $newCharacter->getAgeGroupName()));
+        if ($newCharacter->hasDistinguishingMarks()) {
             $io->writeln('Distinguishing marks:');
-            $io->listing(array_map(function (DistinguishingMark $distinguishingMark) {
-                return $distinguishingMark->getName();
-            }, $newCharacter->getDistinguishingMarks()->toArray()));
+            $io->listing($newCharacter->getDistinguishingMarkValues()->toArray());
         }
-        $io->writeln(sprintf('Complexion: <info>%s</info>', $newCharacter->getComplexion()->getName()));
+        $io->writeln(sprintf('Complexion: <info>%s</info>', $newCharacter->getComplexionName()));
         $io->writeln(sprintf('Build type : <info>%s</info> (%s%% price modifier)', $newCharacter->getBuildType()->getName(), $newCharacter->getBuildType()->getPriceModifier() * 100));
-        $io->writeln(sprintf('Height: <info>%s</info>', $newCharacter->getHeight()->getValue()));
-        $io->writeln(sprintf('Weight: <info>%s</info>', $newCharacter->getWeight()->getValue()));
-        $io->writeln(sprintf('Hair color: <info>%s</info>', $newCharacter->getHairColor()->getValue()));
-        $io->writeln(sprintf('Eye color: <info>%s</info>', $newCharacter->getEyeColor()->getValue()));
-        $io->writeln(sprintf('Upbringing: <info>%s</info> [favorite attribute: <info>%s</info>]', $newCharacter->getUpbringing()->getName(), $newCharacter->getUpbringing()->getFavoredPrimaryAttribute()->getName()));
-        $io->writeln(sprintf('Social class: <info>%s</info> [starting cash: <info>%s</info>]', $newCharacter->getSocialClass()->getName(), $newCharacter->getSocialClass()->getStartingCash()));
+        $io->writeln(sprintf('Height: <info>%s</info>', $newCharacter->getHeightValue()));
+        $io->writeln(sprintf('Weight: <info>%s</info>', $newCharacter->getWeightValue()));
+        $io->writeln(sprintf('Hair color: <info>%s</info>', $newCharacter->getHairColorValue()));
+        $io->writeln(sprintf('Eye color: <info>%s</info>', $newCharacter->getEyeColorValue()));
+        $io->writeln(sprintf('Upbringing: <info>%s</info> [favorite attribute: <info>%s</info>]', $newCharacter->getUpbringing()->getName(), $newCharacter->getUpbringing()->getFavoredPrimaryAttributeName()));
+        $io->writeln(sprintf('Social class: <info>%s</info>', $newCharacter->getSocialClassName()));
         if ($newCharacter->getDrawback()) {
             $io->writeln(sprintf('Drawback: <info>%s</info> %s', $newCharacter->getDrawback()->getName(), $newCharacter->getDrawback()->getEffect()));
         }
@@ -113,7 +110,7 @@ class RollCharacterCommand extends Command
 
         $io->title('Step VIII: Alignment');
         $io->listing([
-            sprintf('Alignment: <info>%s</info>&<info>%s</info>', $newCharacter->getOrderAlignment()->getName(), $newCharacter->getChaosAlignment()->getName()),
+            sprintf('Alignment: <info>%s</info>&<info>%s</info>', $newCharacter->getOrderAlignmentName(), $newCharacter->getChaosAlignmentName()),
         ]);
 
         $io->title('Step IX: Build Your Profession');

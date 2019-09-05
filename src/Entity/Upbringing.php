@@ -20,13 +20,13 @@ class Upbringing
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups("view")
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PrimaryAttribute")
      * @ORM\JoinColumn(nullable=false)
+     * @var PrimaryAttribute|null
      */
     private $favoredPrimaryAttribute;
 
@@ -35,13 +35,23 @@ class Upbringing
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @Serializer\Groups("view")
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getFavoredPrimaryAttribute(): ?PrimaryAttribute
+    /**
+     * @Serializer\Groups("view")
+     * @Serializer\SerializedName("favoredPrimaryAttribute")
+     */
+    public function getFavoredPrimaryAttributeName(): string
     {
-        return $this->favoredPrimaryAttribute;
+        if (null === $this->favoredPrimaryAttribute){
+            throw new  \RuntimeException('Invalid Upbringing object');
+        }
+        return $this->favoredPrimaryAttribute->getName();
     }
 }

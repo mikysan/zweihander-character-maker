@@ -51,6 +51,7 @@ class CharacterService
         $ageGroup = $this->entityManager->getRepository(AgeGroup::class)->findByRoll();
         $distinguishingMarks = [];
         for ($i = 0; $i < $ageGroup->getDistinguishingMarkCoefficient(); $i++) {
+            //todo reroll duplicates?
             $distinguishingMarks[] = $this->entityManager->getRepository(DistinguishingMark::class)->findByRoll();
         }
         $buildType = $this->entityManager->getRepository(BuildType::class)->findByRoll();

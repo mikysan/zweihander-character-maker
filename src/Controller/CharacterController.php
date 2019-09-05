@@ -24,10 +24,6 @@ class CharacterController extends AbstractController
     {
         return $this->json($entityManager->getRepository(Character::class)->findAll(), Response::HTTP_OK, [], [
             'groups' => ['index'],
-// todo improve or possibly remove this
-//            'circular_reference_handler' => function ($object) {
-//                return null;
-//            }
         ]);
     }
 
