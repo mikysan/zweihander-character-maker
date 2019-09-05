@@ -22,6 +22,12 @@ class Character
     private $id;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string")
+     */
+    private $name;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AgeGroup")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -300,6 +306,23 @@ class Character
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string|null
+     * @Serializer\Groups({"view","index"})
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     /**

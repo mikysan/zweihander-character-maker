@@ -120,6 +120,10 @@ class RollCharacterCommand extends Command
             $io->writeln('<error>There\'s no mercy</error>'); //todo mercy rule.
         }
 
+        if ($answer = $io->ask('Write a name', 'Mario Rossi')){
+            $newCharacter->setName($answer);
+        }
+
         if ($input->getOption('save') || $io->confirm('Do you wish to save this character?', false)) {
             $this->entityManager->persist($newCharacter);
             $this->entityManager->flush();
