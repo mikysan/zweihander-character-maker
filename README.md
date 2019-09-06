@@ -65,7 +65,6 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 * allow to choose "Random" choice between human or demi-human (this should be also the default option) by CLI
 * add roll character cash
 * add consider talent, trait or magick modifier to secondary attribute
-* add armor’s Damage Threshold Modifier
 * add export character pdf sheet
 * add switch from metric system to imperial system (?)
 * add multilanguage (?)

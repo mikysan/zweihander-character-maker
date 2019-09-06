@@ -218,6 +218,12 @@ class Character
      */
     private $trappings;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Armor")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $armor;
+
     const GENDERS = [
         'm' => 'Male',
         'f' => 'Female'
@@ -250,7 +256,8 @@ class Character
         int $intelligence,
         int $willpower,
         int $fellowship,
-        string $trappings
+        string $trappings,
+        Armor $armor
     )
     {
         $this->ageGroup = $ageGroup;
@@ -272,6 +279,7 @@ class Character
         $this->weight = $weight;
         $this->sex = $sex;
         $this->trappings = $trappings;
+        $this->armor = $armor;
         $this->ancestralTrait = $ancestralTrait;
         $this->combat = $combat;
         $this->brawn = $brawn;
@@ -630,11 +638,10 @@ class Character
 
     /**
      * @Serializer\Groups("view")
-     * todo add armor’s Damage Threshold Modifier
      */
     public function getDamageThreshold(): int
     {
-        return $this->getBrawnBonus();
+        return $this->getBrawnBonus() + $this->armor->getDamageThresholdModifier();
     }
 
     /**
@@ -678,5 +685,14 @@ class Character
     public function getTrappings(): string
     {
         return $this->trappings;
+    }
+
+    /**
+     * @Serializer\Groups("view")
+     * @Serializer\SerializedName("armor")
+     */
+    public function getArmorName(): string
+    {
+        return $this->armor->getName();
     }
 }

@@ -68,11 +68,9 @@ class RollCharacterCommand extends Command
         $io->writeln('effect: ' . $newCharacter->getAncestralTrait()->getEffect());
 
         $io->title('Step IV: Archetype & Profession');
-        $io->listing([
-            sprintf('Profession: <info>%s</info>', $newCharacter->getProfessionName()),
-        ]);
+        $io->writeln(sprintf('Profession: <info>%s</info>', $newCharacter->getProfessionName()));
+        $io->writeln(sprintf('Armor: <info>%s</info>', $newCharacter->getArmorName()));
         $io->text($newCharacter->getTrappings());
-        //todo display armor
 
         $io->title('Step V: Secondary Attributes');
         $io->listing([
@@ -82,7 +80,7 @@ class RollCharacterCommand extends Command
             sprintf('Initiative: <info>%s</info>', $newCharacter->getInitiative()),
             sprintf('Movement: <info>%s</info>', $newCharacter->getMovement()),
         ]);
-        $io->note('Consider this value can be modified by talent, trait or magick and armor’s Damage Threshold Modifier');
+        $io->note('Consider this value can be modified by talent, trait or magick');
 
         $io->title('Step VI: Background');
         $io->writeln(sprintf('Season of birth: <info>%s</info>', $newCharacter->getSeasonOfBirthName()));
@@ -121,7 +119,7 @@ class RollCharacterCommand extends Command
             $io->writeln('<error>There\'s no mercy</error>'); //todo mercy rule.
         }
 
-        if ($answer = $io->ask('Write a name', 'Mario Rossi')){
+        if ($answer = $io->ask('Write a name for your character', 'Mario Rossi')){
             $newCharacter->setName($answer);
         }
 

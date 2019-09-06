@@ -28,6 +28,12 @@ class Archetype
      */
     private $trappings;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Armor")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $armor;
+
     public function __toString()
     {
         return $this->getName();
@@ -49,5 +55,10 @@ class Archetype
     public function getTrappings()
     {
         return $this->trappings;
+    }
+
+    public function getArmor(): ?Armor
+    {
+        return $this->armor;
     }
 }

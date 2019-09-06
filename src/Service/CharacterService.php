@@ -91,7 +91,8 @@ class CharacterService
             $primaryAttributes['intelligence'],
             $primaryAttributes['willpower'],
             $primaryAttributes['fellowship'],
-            $archetype->getTrappings()
+            $archetype->getTrappings(),
+            $archetype->getArmor()
         );
     }
 
