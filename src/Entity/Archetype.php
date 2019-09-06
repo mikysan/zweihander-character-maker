@@ -23,6 +23,11 @@ class Archetype
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $trappings;
+
     public function __toString()
     {
         return $this->getName();
@@ -38,10 +43,11 @@ class Archetype
         return $this->name;
     }
 
-    public function setName(string $name): self
+    /**
+     * @return string
+     */
+    public function getTrappings()
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->trappings;
     }
 }

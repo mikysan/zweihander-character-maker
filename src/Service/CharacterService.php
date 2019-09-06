@@ -57,7 +57,7 @@ class CharacterService
         $buildType = $this->entityManager->getRepository(BuildType::class)->findByRoll();
         $hwRoll = null;
         $sex = mt_rand(1, 2) % 2 === 0 ? 'm' : 'f';
-
+        $archetype = $this->entityManager->getRepository(Archetype::class)->findByRoll();
 
         $alignmentRoll = null;
         $orderAlignment = $this->entityManager->getRepository(OrderAlignment::class)->findByRoll($alignmentRoll);
@@ -68,7 +68,7 @@ class CharacterService
             $ancestry,
             $this->entityManager->getRepository(AncestralTrait::class)->findByRoll($ancestry),
             $sex,
-            $this->entityManager->getRepository(Profession::class)->findByRoll($this->entityManager->getRepository(Archetype::class)->findByRoll()),
+            $this->entityManager->getRepository(Profession::class)->findByRoll($archetype),
             $buildType,
             $this->entityManager->getRepository(Complexion::class)->findByRoll(),
             $this->entityManager->getRepository(EyeColor::class)->findByRoll($ancestry),
@@ -90,7 +90,8 @@ class CharacterService
             $primaryAttributes['perception'],
             $primaryAttributes['intelligence'],
             $primaryAttributes['willpower'],
-            $primaryAttributes['fellowship']
+            $primaryAttributes['fellowship'],
+            $archetype->getTrappings()
         );
     }
 

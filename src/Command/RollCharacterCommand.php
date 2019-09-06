@@ -71,7 +71,8 @@ class RollCharacterCommand extends Command
         $io->listing([
             sprintf('Profession: <info>%s</info>', $newCharacter->getProfessionName()),
         ]);
-        $io->note('Check Trappings on manual');
+        $io->text($newCharacter->getTrappings());
+        //todo display armor
 
         $io->title('Step V: Secondary Attributes');
         $io->listing([

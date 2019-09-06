@@ -213,6 +213,11 @@ class Character
      */
     private $fatePoints;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $trappings;
+
     const GENDERS = [
         'm' => 'Male',
         'f' => 'Female'
@@ -244,7 +249,8 @@ class Character
         int $perception,
         int $intelligence,
         int $willpower,
-        int $fellowship
+        int $fellowship,
+        string $trappings
     )
     {
         $this->ageGroup = $ageGroup;
@@ -265,6 +271,7 @@ class Character
         $this->upbringing = $upbringing;
         $this->weight = $weight;
         $this->sex = $sex;
+        $this->trappings = $trappings;
         $this->ancestralTrait = $ancestralTrait;
         $this->combat = $combat;
         $this->brawn = $brawn;
@@ -663,5 +670,13 @@ class Character
     public function getFatePoints(): int
     {
         return $this->fatePoints;
+    }
+
+    /**
+     * @Serializer\Groups("view")
+     */
+    public function getTrappings(): string
+    {
+        return $this->trappings;
     }
 }
