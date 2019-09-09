@@ -29,7 +29,7 @@ final class Version20190906102716 extends AbstractMigration
         $this->addSql('update archetype set trappings = "animalbane(3), antivenom, backpack, bullwhip, heavy boots, holy symbol, Hide or Suit of Furs, survival kit, torches(3), traveling clothes, waterskin, wilderness cloak, wolfsbane, fire - hardened spear or hunting bow with arrows(9) and quiver or woodsman\'s axe" where name like "Ranger"');
         $this->addSql('update archetype set trappings = "coin purse, fancy shoes, fashionable clothing, foppish hat, holy symbol, knuckleduster, mandrake root (3), mantle, neck ruff, shoulder bag, writing kit, throwing knives (3) with bandolier or rapier or walking cane (as improvised hand weapon)" where name like "Socialite"');
         $this->addSql('update archetype set trappings = "fire-hardened spear, heavy boots, lantern, laudanum (3), military attire, oil pot, red cap mushrooms, rucksack, suit of leather armor, tincture (3), wooden shield, arbalest crossbow with bolts (9) and quiver or mortuary sword or pike" where name like "Warrior"');
-        $this->addSql('ALTER TABLE `character` ADD name VARCHAR(255) NOT NULL, ADD trappings LONGTEXT NOT NULL');
+        $this->addSql('ALTER TABLE `character` ADD trappings LONGTEXT NOT NULL');
         $this->addSql('update `character` c inner join profession p on c.profession_id = p.id inner join archetype a on p.archetype_id = a.id set c.trappings = a.trappings where c.trappings = "";');
     }
 
@@ -39,6 +39,6 @@ final class Version20190906102716 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE archetype DROP trappings');
-        $this->addSql('ALTER TABLE `character` DROP name, DROP trappings');
+        $this->addSql('ALTER TABLE `character` DROP trappings');
     }
 }
