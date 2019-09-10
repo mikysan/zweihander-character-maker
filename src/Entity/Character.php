@@ -582,41 +582,9 @@ class Character
     /**
      * @Serializer\Groups("view")
      */
-    public function getBrawnBonus(): int
-    {
-        return $this->brawnBonus;
-    }
-
-    /**
-     * @Serializer\Groups("view")
-     */
-    public function getAgilityBonus(): int
-    {
-        return $this->agilityBonus;
-    }
-
-    /**
-     * @Serializer\Groups("view")
-     */
-    public function getPerceptionBonus(): int
-    {
-        return $this->perceptionBonus;
-    }
-
-    /**
-     * @Serializer\Groups("view")
-     */
     public function getIntelligenceBonus(): int
     {
         return $this->intelligenceBonus;
-    }
-
-    /**
-     * @Serializer\Groups("view")
-     */
-    public function getWillpowerBonus(): int
-    {
-        return $this->willpowerBonus;
     }
 
     /**
@@ -639,9 +607,25 @@ class Character
     /**
      * @Serializer\Groups("view")
      */
+    public function getWillpowerBonus(): int
+    {
+        return $this->willpowerBonus;
+    }
+
+    /**
+     * @Serializer\Groups("view")
+     */
     public function getDamageThreshold(): int
     {
         return $this->getBrawnBonus() + $this->armor->getDamageThresholdModifier();
+    }
+
+    /**
+     * @Serializer\Groups("view")
+     */
+    public function getBrawnBonus(): int
+    {
+        return $this->brawnBonus;
     }
 
     /**
@@ -664,11 +648,27 @@ class Character
 
     /**
      * @Serializer\Groups("view")
+     */
+    public function getPerceptionBonus(): int
+    {
+        return $this->perceptionBonus;
+    }
+
+    /**
+     * @Serializer\Groups("view")
      * todo consider add talent, trait or magick modifier
      */
     public function getMovement(): int
     {
         return 3 + $this->getAgilityBonus();
+    }
+
+    /**
+     * @Serializer\Groups("view")
+     */
+    public function getAgilityBonus(): int
+    {
+        return $this->agilityBonus;
     }
 
     /**

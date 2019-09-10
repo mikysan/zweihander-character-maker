@@ -7,6 +7,7 @@ use Symfony\Component\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DrawbackRepository")
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"min_roll", "max_roll"})})
  */
 class Drawback
 {

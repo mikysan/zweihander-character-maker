@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AchetypeRepository")
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"min_roll", "max_roll"}), @ORM\UniqueConstraint(columns={"name"})})
  */
 class Archetype
 {
@@ -39,14 +40,14 @@ class Archetype
         return $this->getName();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**

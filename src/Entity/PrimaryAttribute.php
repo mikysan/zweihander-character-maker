@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PrimaryAttributeRepository")
+ * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"name"})})
  */
 class PrimaryAttribute
 {
