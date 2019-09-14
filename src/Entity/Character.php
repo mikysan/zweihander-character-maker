@@ -316,7 +316,7 @@ class Character
 
     /**
      * @Serializer\Groups({"view","index"})
-     * @Serializer\SerializedName("ageGroup")
+     * @Serializer\SerializedName("id")
      */
     public function getId(): ?int
     {
