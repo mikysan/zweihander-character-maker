@@ -682,9 +682,9 @@ class Character
     /**
      * @Serializer\Groups("view")
      */
-    public function getTrappings(): string
+    public function getTrappings(): array
     {
-        return $this->trappings;
+        return explode(', ', $this->trappings);
     }
 
     /**
