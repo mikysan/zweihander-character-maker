@@ -26,9 +26,7 @@ class Upbringing
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PrimaryAttribute")
-     * @ORM\JoinColumn(nullable=false)
-     * @var PrimaryAttribute|null
+     * @ORM\Column(type="integer")
      */
     private $favoredPrimaryAttribute;
 
@@ -54,6 +52,6 @@ class Upbringing
         if (null === $this->favoredPrimaryAttribute) {
             throw new  RuntimeException('Invalid Upbringing object');
         }
-        return $this->favoredPrimaryAttribute->getName();
+        return PrimaryAttribute::ATTRIBUTE_NAMES[$this->favoredPrimaryAttribute];
     }
 }

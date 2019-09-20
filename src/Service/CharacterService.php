@@ -42,8 +42,8 @@ class CharacterService
     public function rollNew(bool $rollDrawback = true, bool $rollAncestry = false, bool $unlinkAlignment = false): Character
     {
         $primaryAttributes = [];
-        foreach ($this->entityManager->getRepository(PrimaryAttribute::class)->findAll() as $primaryAttribute) {
-            $primaryAttributes[strtolower($primaryAttribute->getName())] = $primaryAttribute->calcPseudoRandomValue();
+        foreach (array_keys(PrimaryAttribute::ATTRIBUTE_NAMES) as $primaryAttribute) {
+            $primaryAttributes[$primaryAttribute] = PrimaryAttribute::calcPseudoRandomValue();
         }
         $ancestryRepository = $this->entityManager->getRepository(Ancestry::class);
         $ancestry = $rollAncestry ? $ancestryRepository->findByRoll() : $ancestryRepository->findOneBy(['name' => 'Human']);
@@ -88,13 +88,13 @@ class CharacterService
             $rollDrawback ? $this->entityManager->getRepository(Drawback::class)->findByRoll() : null,
             $this->entityManager->getRepository(SocialClass::class)->findByRoll(),
             $this->entityManager->getRepository(Upbringing::class)->findByRoll(),
-            $primaryAttributes['combat'],
-            $primaryAttributes['brawn'],
-            $primaryAttributes['agility'],
-            $primaryAttributes['perception'],
-            $primaryAttributes['intelligence'],
-            $primaryAttributes['willpower'],
-            $primaryAttributes['fellowship'],
+            $primaryAttributes[PrimaryAttribute::COMBAT],
+            $primaryAttributes[PrimaryAttribute::BRAWN],
+            $primaryAttributes[PrimaryAttribute::AGILITY],
+            $primaryAttributes[PrimaryAttribute::PERCEPTION],
+            $primaryAttributes[PrimaryAttribute::INTELLIGENCE],
+            $primaryAttributes[PrimaryAttribute::WILLPOWER],
+            $primaryAttributes[PrimaryAttribute::FELLOWSHIP],
             $archetype->getTrappings(),
             $archetype->getArmor()
         );

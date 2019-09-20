@@ -28,8 +28,7 @@ class AncestryModifier
     private $ancestry;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PrimaryAttribute")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
     private $primaryAttribute;
 
@@ -48,7 +47,7 @@ class AncestryModifier
         return $this->ancestry;
     }
 
-    public function getPrimaryAttribute(): ?PrimaryAttribute
+    public function getPrimaryAttribute(): ?int
     {
         return $this->primaryAttribute;
     }

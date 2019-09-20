@@ -298,7 +298,7 @@ class Character
         $willpowerBonus = floor($willpower / 10);
         $fellowshipBonus = floor($fellowship / 10);
         foreach ($ancestry->getAncestryModifiers() as $modifier) {
-            $attributeBonusName = strtolower($modifier->getPrimaryAttribute()->getName()) . 'Bonus';
+            $attributeBonusName = strtolower(PrimaryAttribute::ATTRIBUTE_NAMES[$modifier->getPrimaryAttribute()]) . 'Bonus';
             isset($$attributeBonusName) && $$attributeBonusName = $$attributeBonusName + $modifier->getValue();
         }
 

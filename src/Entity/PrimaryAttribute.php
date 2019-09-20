@@ -2,38 +2,27 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PrimaryAttributeRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(columns={"name"})})
- */
 class PrimaryAttribute
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    public const COMBAT = 1;
+    public const BRAWN = 2;
+    public const AGILITY = 3;
+    public const PERCEPTION = 4;
+    public const INTELLIGENCE = 5;
+    public const WILLPOWER = 6;
+    public const FELLOWSHIP = 7;
+    public const ATTRIBUTE_NAMES = [
+        self::COMBAT => 'Combat',
+        self::BRAWN => 'Brawn',
+        self::AGILITY => 'Agility',
+        self::PERCEPTION => 'Perception',
+        self::INTELLIGENCE => 'Intelligence',
+        self::WILLPOWER => 'Willpower',
+        self::FELLOWSHIP => 'Fellowship',
+    ];
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    public function calcPseudoRandomValue()
+    public static function calcPseudoRandomValue()
     {
         return 25 + mt_rand(1, 10) + mt_rand(1, 10) + mt_rand(1, 10);
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
     }
 }

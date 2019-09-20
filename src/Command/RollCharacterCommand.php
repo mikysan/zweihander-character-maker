@@ -70,6 +70,7 @@ class RollCharacterCommand extends Command
         $io->title('Step IV: Archetype & Profession');
         $io->writeln(sprintf('Profession: <info>%s</info>', $newCharacter->getProfessionName()));
         $io->writeln(sprintf('Armor: <info>%s</info>', $newCharacter->getArmorName()));
+        $io->writeln('Trappings:');
         $io->text($newCharacter->getTrappings());
 
         $io->title('Step V: Secondary Attributes');
