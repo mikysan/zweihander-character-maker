@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class CharacterController
  * @package App\Controller
- * @Route("/character", name="character")
+ * @Route("/characters", name="character")
  */
 class CharacterController extends AbstractController
 {

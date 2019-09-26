@@ -4,29 +4,20 @@ This software can generate [ZWEIHÄNDER](https://grimandperilous.com/)’s chara
 
 ## Getting Started
 
-To generate a character you can simply run this command:
+You can use the following endpoints:
+
+| *Mehtod*   | *Endpoint*             | *Description*                                                                                                                                                                                                                                                                                             |
+|------------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ```GET```  | `/characters`          | Return an Index of saved characters.                                                                                                                                                                                                                                                                      |
+| ```GET```  | `/characters/{id}`     | Return detail of a specific character.                                                                                                                                                                                                                                                                    |
+| ```GET```  | `/characters/roll-new` | Return detail of a random generated character, send also a custom header 'X-Character-Token' which is required to save the new character. You can optionally pass any combination of these three query parameter to affect character generation: `roll-drawback`, `roll-ancestry` and `unlink-alignment`. |
+| ```POST``` | `/characters`          | Save a random generated character, you have to set a name in the body payload (it can be json encode or form encoded based on the Content-Type) and sent back the 'X-Character-Token' header.                                                                                                             |
+
+Alternately to generate a character you can simply run this command:
 ```
 docker exec -it -u dev sf4_php bin/console app:roll:character
 ```
-You can add several flag to the command, use the `--help` to learn about those.
-
-Alternately you can use the endpoints:
-- get an Index of saved characters
-```http request
-GET /character
-```
-- get detail of a specific character
-```http request
-GET /character/{id}
-```
-- get detail of a random generated character, send also a custom header 'X-Character-Token' which is required to save the new character.
-```http request
-GET /character/roll-new
-```
-- Save a random generated character, you have to set a name in the body payload and sent back the 'X-Character-Token' header.
-```http request
-POST /character
-```
+You can add several flag to the command, use the `--help` to learn more about those.
 
 ### Prerequisites
 
@@ -59,10 +50,12 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 
 ## TODO
 
+* add serving frontend on index
 * add cs fixer
 * add tests
-* allow user to apply Mercy Rule by CLI
-* allow to choose "Random" choice between human or demi-human (this should be also the default option) by CLI
+* add phpstan
+* support the "Mercy Rule"
+* allow to choose "Random" choice between human or demi-human (this should be also the default option)
 * add roll character cash
 * add consider talent, trait or magick modifier to secondary attribute
 * add export character pdf sheet
