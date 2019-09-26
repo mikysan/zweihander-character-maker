@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
@@ -58,7 +56,7 @@ class Character
     private $complexion;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\DistinguishingMark")
+     * @ORM\Column(type="json")
      */
     private $distinguishingMarks;
 
@@ -257,7 +255,8 @@ class Character
         int $willpower,
         int $fellowship,
         string $trappings,
-        Armor $armor
+        Armor $armor,
+        ?string $name = null
     )
     {
         $this->ageGroup = $ageGroup;
@@ -265,7 +264,7 @@ class Character
         $this->buildType = $buildType;
         $this->chaosAlignment = $chaosAlignment;
         $this->complexion = $complexion;
-        $this->distinguishingMarks = new ArrayCollection($distinguishingMarks);
+        $this->distinguishingMarks = $distinguishingMarks;
         $this->dooming = $dooming;
         $this->drawback = $drawback;
         $this->eyeColor = $eyeColor;
@@ -312,6 +311,8 @@ class Character
 
         // Elaborate FatePoints
         $this->fatePoints = $drawback ? 2 : 1;
+
+        $this->name = $name;
     }
 
     /**
@@ -386,19 +387,17 @@ class Character
 
     public function hasDistinguishingMarks(): bool
     {
-        return $this->distinguishingMarks->isEmpty();
+        return 0 !== count($this->distinguishingMarks);
     }
 
     /**
      * @Serializer\Groups("view")
      * @Serializer\SerializedName("distinguishingMarks")
-     * @return Collection|string[]
+     * @return string[]
      */
-    public function getDistinguishingMarkValues(): Collection
+    public function getDistinguishingMark(): ?array
     {
-        return $this->distinguishingMarks->map(function (DistinguishingMark $distinguishingMark) {
-            return $distinguishingMark->getName();
-        });
+        return $this->distinguishingMarks;
     }
 
     /**

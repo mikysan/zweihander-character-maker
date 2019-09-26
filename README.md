@@ -17,7 +17,12 @@ Alternately to generate a character you can simply run this command:
 ```
 docker exec -it -u dev sf4_php bin/console app:roll:character
 ```
-You can add several flag to the command, use the `--help` to learn more about those.
+> You can add several flag to the command, use the `--help` to learn more about those.
+
+You can generate and save into the DB 1000 character by run 
+```
+docker exec -it -u dev sf4_php bin/console app:roll:character-batch
+```
 
 ### Prerequisites
 

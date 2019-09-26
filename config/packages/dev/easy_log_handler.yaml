@@ -1,0 +1,4 @@
+services:
+    EasyCorp\EasyLog\EasyLogHandler:
+        public: false
+        arguments: ['php://stdout']
