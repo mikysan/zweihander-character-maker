@@ -25,7 +25,7 @@ class HairColor
     private $ancestry;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180)
      */
     private $value;
 

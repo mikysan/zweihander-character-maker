@@ -22,7 +22,7 @@ final class Version20190906105506 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE armor (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, damage_threshold_modifier INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE armor (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(180) NOT NULL, damage_threshold_modifier INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('insert into armor (name, damage_threshold_modifier) values (\'Clothing\', 0), (\'Fur or Hide\', 1), (\'Quilted\', 1), (\'Leather\', 2), (\'Brigandine\', 3), (\'Mail\', 4), (\'Munitions Plate\', 5), (\'Full Plate\', 6);');
         $this->addSql('ALTER TABLE archetype ADD armor_id INT NOT NULL');
         $this->addSql('update archetype a inner join armor m on m.name = \'Clothing\' set a.armor_id = m.id where a.name = \'Academic\';');

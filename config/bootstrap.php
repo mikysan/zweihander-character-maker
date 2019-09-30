@@ -1,20 +1,22 @@
 <?php
 
-use Symfony\Component\Dotenv\Dotenv;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
-// Load cached env vars if the .env.local.php file exists
-// Run "composer dump-env prod" to create it (requires symfony/flex >=1.2)
-if (is_array($env = @include dirname(__DIR__).'/.env.local.php')) {
-    foreach ($env as $k => $v) {
-        $_ENV[$k] = $_ENV[$k] ?? (isset($_SERVER[$k]) && 0 !== strpos($k, 'HTTP_') ? $_SERVER[$k] : $v);
+// If the $_SERVER['APP_ENV'] is set to prod we dont'have the Dotenv component
+if (!(isset($_SERVER['APP_ENV']) && $_SERVER['APP_ENV'] === 'prod')) {
+    // Load cached env vars if the .env.local.php file exists
+    // Run "composer dump-env prod" to create it (requires symfony/flex >=1.2)
+    if (is_array($env = @include dirname(__DIR__) . '/.env.local.php')) {
+        foreach ($env as $k => $v) {
+            $_ENV[$k] = $_ENV[$k] ?? (isset($_SERVER[$k]) && 0 !== strpos($k, 'HTTP_') ? $_SERVER[$k] : $v);
+        }
+    } elseif (!class_exists(\Symfony\Component\Dotenv\Dotenv::class)) {
+        throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
+    } else {
+        // load all the .env files
+        (new \Symfony\Component\Dotenv\Dotenv(false))->loadEnv(dirname(__DIR__) . '/.env');
     }
-} elseif (!class_exists(Dotenv::class)) {
-    throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
-} else {
-    // load all the .env files
-    (new Dotenv(false))->loadEnv(dirname(__DIR__).'/.env');
 }
 
 $_SERVER += $_ENV;

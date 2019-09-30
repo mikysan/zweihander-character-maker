@@ -21,7 +21,7 @@ class BuildType
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180)
      * @Serializer\Groups({"index", "view"})
      */
     private $name;

@@ -7,7 +7,7 @@ monolog:
             excluded_http_codes: [404, 405]
         nested:
             type: stream
-            path: "php://stdout"
+            path: "php://stderr"
             level: debug
             formatter: 'monolog.formatter.json'
         console:
@@ -16,7 +16,7 @@ monolog:
             channels: ["!event", "!doctrine"]
         deprecation:
             type: stream
-            path: "php://stdout"
+            path: "php://stderr"
             formatter: 'monolog.formatter.json'
         deprecation_filter:
             type: filter

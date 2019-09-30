@@ -19,7 +19,7 @@ class OrderAlignment
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180)
      */
     private $name;
 

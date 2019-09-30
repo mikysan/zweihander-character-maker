@@ -20,7 +20,7 @@ class Drawback
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180)
      * @Serializer\Groups("view")
      */
     private $name;
