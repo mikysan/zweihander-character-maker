@@ -10,51 +10,25 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190824101544 extends AbstractMigration
+final class Version20191004144244 extends AbstractMigration
 {
-    public function getDescription(): string
+    public function getDescription() : string
     {
-        return 'Populate the DB';
+        return '';
     }
 
-    public function down(Schema $schema): void
+    public function up(Schema $schema) : void
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql('SET FOREIGN_KEY_CHECKS=0;');
-        $this->addSql('TRUNCATE TABLE age_group');
-        $this->addSql('TRUNCATE TABLE ancestral_trait');
-        $this->addSql('TRUNCATE TABLE ancestry');
-        $this->addSql('TRUNCATE TABLE ancestry_modifier');
-        $this->addSql('TRUNCATE TABLE archetype');
-        $this->addSql('TRUNCATE TABLE build_type');
-        $this->addSql('TRUNCATE TABLE chaos_alignment');
-        $this->addSql('TRUNCATE TABLE complexion');
-        $this->addSql('TRUNCATE TABLE distinguishing_mark');
-        $this->addSql('TRUNCATE TABLE dooming');
-        $this->addSql('TRUNCATE TABLE drawback');
-        $this->addSql('TRUNCATE TABLE eye_color');
-        $this->addSql('TRUNCATE TABLE hair_color');
-        $this->addSql('TRUNCATE TABLE height');
-        $this->addSql('TRUNCATE TABLE migration_versions');
-        $this->addSql('TRUNCATE TABLE order_alignment');
-        $this->addSql('TRUNCATE TABLE primary_attribute');
-        $this->addSql('TRUNCATE TABLE profession');
-        $this->addSql('TRUNCATE TABLE season');
-        $this->addSql('TRUNCATE TABLE social_class');
-        $this->addSql('TRUNCATE TABLE upbringing');
-        $this->addSql('TRUNCATE TABLE weight');
-        $this->addSql('SET FOREIGN_KEY_CHECKS=1;');
-
-    }
-
-    public function up(Schema $schema): void
-    {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        $this->addSql('SET FOREIGN_KEY_CHECKS=0;');
         $this->addSql("INSERT INTO age_group (id, name, distinguishing_mark_coefficient, min_roll, max_roll) VALUES (1, 'Young', 0, 1, 25);");
         $this->addSql("INSERT INTO age_group (id, name, distinguishing_mark_coefficient, min_roll, max_roll) VALUES (2, 'Adult', 1, 26, 50);");
         $this->addSql("INSERT INTO age_group (id, name, distinguishing_mark_coefficient, min_roll, max_roll) VALUES (3, 'Middle aged', 2, 51, 75);");
         $this->addSql("INSERT INTO age_group (id, name, distinguishing_mark_coefficient, min_roll, max_roll) VALUES (4, 'Elderly', 3, 76, 100);");
+        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (1, 'Dwarf', 1, 20);");
+        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (2, 'Elf', 21, 40);");
+        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (3, 'Gnome', 41, 60);");
+        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (4, 'Halfling', 61, 80);");
+        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (5, 'Ogre', 81, 100);");
+        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (6, 'Human', 101, 101);");
         $this->addSql("INSERT INTO ancestral_trait (id, ancestry_id, name, effect, min_roll, max_roll) VALUES (1, 6, 'Blessing in Disguise', 'Whenever the time calls for you to suffer a debiliting Injury or face death, you mai alternatively gain 1 permanent Chaos Rank (instead of spending a Fate Point) to ignore it entirely.', 1, 8);");
         $this->addSql("INSERT INTO ancestral_trait (id, ancestry_id, name, effect, min_roll, max_roll) VALUES (2, 6, 'Danger Sense', 'Whenever you are Surprised, spend one Fortune Point to avoid it and take your Turn as normal.', 9, 16);");
         $this->addSql("INSERT INTO ancestral_trait (id, ancestry_id, name, effect, min_roll, max_roll) VALUES (3, 6, 'Dauntless', 'You are immune to the effects of the Intimidate Skill and cannot be Stunned or Knocked Out!', 17, 25);");
@@ -127,52 +101,58 @@ final class Version20190824101544 extends AbstractMigration
         $this->addSql("INSERT INTO ancestral_trait (id, ancestry_id, name, effect, min_roll, max_roll) VALUES (70, 2, 'Nature’s Own', 'You leave no trace of your passing in rural areas or above ground, unless discovered by Magick or a Critically Succeeded Awareness Test.', 77, 85);");
         $this->addSql("INSERT INTO ancestral_trait (id, ancestry_id, name, effect, min_roll, max_roll) VALUES (71, 2, 'Nighteyes', 'You can see completely in the dark above ground as if it were full daylight, provided there is starlight or moonlight in the sky.', 86, 92);");
         $this->addSql("INSERT INTO ancestral_trait (id, ancestry_id, name, effect, min_roll, max_roll) VALUES (72, 2, 'Warrior’s Tattoo', 'Add the Punishing Quality to any Martial Melee or Martial Ranged weapon you wield, and +1 to Total Damage with these same weapons.', 93, 100);");
-        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (1, 'Dwarf', 1, 20);");
-        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (2, 'Elf', 21, 40);");
-        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (3, 'Gnome', 41, 60);");
-        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (4, 'Halfling', 61, 80);");
-        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (5, 'Ogre', 81, 100);");
-        $this->addSql("INSERT INTO ancestry (id, name, min_roll, max_roll) VALUES (6, 'Human', 101, 101);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (1, 6, 1, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (2, 6, 4, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (3, 6, 5, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (4, 6, 3, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (5, 6, 7, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (6, 6, 6, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (7, 1, 2, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (8, 1, 1, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (9, 1, 6, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (10, 1, 3, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (11, 1, 7, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (12, 1, 4, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (13, 2, 3, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (14, 2, 4, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (15, 2, 5, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (16, 2, 2, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (17, 2, 7, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (18, 2, 6, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (19, 3, 3, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (20, 3, 5, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (21, 3, 6, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (22, 3, 2, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (23, 3, 1, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (24, 3, 7, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (25, 4, 3, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (26, 4, 7, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (27, 4, 4, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (28, 4, 2, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (29, 4, 1, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (30, 4, 5, -1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (31, 5, 2, 2);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (32, 5, 1, 1);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (33, 5, 3, -2);");
-        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute_id, value) VALUES (34, 5, 4, -1);");
-        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll) VALUES (1, 'Academic', 1, 15);");
-        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll) VALUES (2, 'Commoner', 16, 32);");
-        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll) VALUES (3, 'Knave', 33, 49);");
-        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll) VALUES (4, 'Ranger', 50, 66);");
-        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll) VALUES (5, 'Socialite', 67, 83);");
-        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll) VALUES (6, 'Warrior', 84, 100);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (1, 6, 1, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (2, 6, 4, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (3, 6, 5, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (4, 6, 3, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (5, 6, 7, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (6, 6, 6, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (7, 1, 2, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (8, 1, 1, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (9, 1, 6, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (10, 1, 3, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (11, 1, 7, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (12, 1, 4, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (13, 2, 3, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (14, 2, 4, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (15, 2, 5, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (16, 2, 2, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (17, 2, 7, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (18, 2, 6, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (19, 3, 3, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (20, 3, 5, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (21, 3, 6, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (22, 3, 2, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (23, 3, 1, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (24, 3, 7, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (25, 4, 3, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (26, 4, 7, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (27, 4, 4, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (28, 4, 2, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (29, 4, 1, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (30, 4, 5, -1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (31, 5, 2, 2);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (32, 5, 1, 1);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (33, 5, 3, -2);");
+        $this->addSql("INSERT INTO ancestry_modifier (id, ancestry_id, primary_attribute, value) VALUES (34, 5, 4, -1);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (1, 'Clothing', 0);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (2, 'Fur or Hide', 1);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (3, 'Quilted', 1);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (4, 'Leather', 2);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (5, 'Brigandine', 3);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (6, 'Mail', 4);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (7, 'Munitions Plate', 5);");
+        $this->addSql("INSERT INTO armor (id, name, damage_threshold_modifier) VALUES (8, 'Full Plate', 6);");
+        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll, armor_id, trappings) VALUES (1, 'Academic', 1, 15, 1, 'black lotus, bottle of leeches, coin purse, dirk, fine clothing, holy symbol, loose robes, quicksilver, royal water, shoulder bag, smelling salts (3), soft shoes or leather sandals, writing kit, cudgel or staff or throwing knives (3) with bandolier');");
+        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll, armor_id, trappings) VALUES (2, 'Commoner', 16, 32, 1, 'bandages (3), bottle bomb, grave root, holy symbol, leather sandals or heavy boots, rucksack, shiv, simple attire, warm vest, shepherd`s sling with sling stones(9) or splitting maul or threshing flail');");
+        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll, armor_id, trappings) VALUES (3, 'Knave', 33, 49, 1, 'antivenom, dark clothes or tattered rags, folkbane(3), gaff bag, garish attire or second - hand attire, holy symbol, lock picks, mantle, soft shoes, stiletto, blackjack or garrote or flintlock pistol with gunpowder & shot(6)');");
+        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll, armor_id, trappings) VALUES (4, 'Ranger', 50, 66, 2, 'animalbane(3), antivenom, backpack, bullwhip, heavy boots, holy symbol, Hide or Suit of Furs, survival kit, torches(3), traveling clothes, waterskin, wilderness cloak, wolfsbane, fire - hardened spear or hunting bow with arrows(9) and quiver or woodsman`s axe');");
+        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll, armor_id, trappings) VALUES (5, 'Socialite', 67, 83, 1, 'coin purse, fancy shoes, fashionable clothing, foppish hat, holy symbol, knuckleduster, mandrake root (3), mantle, neck ruff, shoulder bag, writing kit, throwing knives (3) with bandolier or rapier or walking cane (as improvised hand weapon)');");
+        $this->addSql("INSERT INTO archetype (id, name, min_roll, max_roll, armor_id, trappings) VALUES (6, 'Warrior', 84, 100, 4, 'fire-hardened spear, heavy boots, lantern, laudanum (3), military attire, oil pot, red cap mushrooms, rucksack, suit of leather armor, tincture (3), wooden shield, arbalest crossbow with bolts (9) and quiver or mortuary sword or pike');");
+        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (1, 'Spring', 1, 25);");
+        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (2, 'Summer', 26, 50);");
+        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (3, 'Autumn', 51, 75);");
+        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (4, 'Winter', 76, 100);");
         $this->addSql("INSERT INTO build_type (id, name, price_modifier, min_roll, max_roll) VALUES (1, 'Frail', -0.2, 1, 20);");
         $this->addSql("INSERT INTO build_type (id, name, price_modifier, min_roll, max_roll) VALUES (2, 'Slender', -0.1, 21, 40);");
         $this->addSql("INSERT INTO build_type (id, name, price_modifier, min_roll, max_roll) VALUES (3, 'Normal', 0, 41, 60);");
@@ -725,8 +705,6 @@ final class Version20190824101544 extends AbstractMigration
         $this->addSql("INSERT INTO height (id, ancestry_id, value, gender, min_roll, max_roll) VALUES (118, 6, '6.0ft', 'm', 71, 80);");
         $this->addSql("INSERT INTO height (id, ancestry_id, value, gender, min_roll, max_roll) VALUES (119, 6, '6.1ft', 'm', 81, 90);");
         $this->addSql("INSERT INTO height (id, ancestry_id, value, gender, min_roll, max_roll) VALUES (120, 6, '6.2ft', 'm', 91, 100);");
-        $this->addSql("INSERT INTO migration_versions (version, executed_at) VALUES ('20190808184300', '2019-08-10 12:31:48');");
-        $this->addSql("INSERT INTO migration_versions (version, executed_at) VALUES ('20190810143703', '2019-08-10 14:37:08');");
         $this->addSql("INSERT INTO order_alignment (id, name, min_roll, max_roll) VALUES (1, 'Adaptation', 1, 4);");
         $this->addSql("INSERT INTO order_alignment (id, name, min_roll, max_roll) VALUES (2, 'Ambition', 5, 8);");
         $this->addSql("INSERT INTO order_alignment (id, name, min_roll, max_roll) VALUES (3, 'Candor', 9, 12);");
@@ -752,13 +730,6 @@ final class Version20190824101544 extends AbstractMigration
         $this->addSql("INSERT INTO order_alignment (id, name, min_roll, max_roll) VALUES (23, 'Wisdom', 89, 92);");
         $this->addSql("INSERT INTO order_alignment (id, name, min_roll, max_roll) VALUES (24, 'Wit', 93, 96);");
         $this->addSql("INSERT INTO order_alignment (id, name, min_roll, max_roll) VALUES (25, 'Zeal', 97, 100);");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (1, 'Combat');");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (2, 'Brawn');");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (3, 'Agility');");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (4, 'Perception');");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (5, 'Intelligence');");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (6, 'Willpower');");
-        $this->addSql("INSERT INTO primary_attribute (id, name) VALUES (7, 'Fellowship');");
         $this->addSql("INSERT INTO profession (id, archetype_id, name, min_roll, max_roll) VALUES (1, 1, 'Adherent', 1, 8);");
         $this->addSql("INSERT INTO profession (id, archetype_id, name, min_roll, max_roll) VALUES (2, 1, 'Anchorite', 9, 16);");
         $this->addSql("INSERT INTO profession (id, archetype_id, name, min_roll, max_roll) VALUES (3, 1, 'Antiquarian', 17, 25);");
@@ -831,20 +802,16 @@ final class Version20190824101544 extends AbstractMigration
         $this->addSql("INSERT INTO profession (id, archetype_id, name, min_roll, max_roll) VALUES (70, 6, 'Sellsword', 77, 85);");
         $this->addSql("INSERT INTO profession (id, archetype_id, name, min_roll, max_roll) VALUES (71, 6, 'Squire', 86, 92);");
         $this->addSql("INSERT INTO profession (id, archetype_id, name, min_roll, max_roll) VALUES (72, 6, 'Watchman', 93, 100);");
-        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (1, 'Spring', 1, 25);");
-        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (2, 'Summer', 26, 50);");
-        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (3, 'Autumn', 51, 75);");
-        $this->addSql("INSERT INTO season (id, name, min_roll, max_roll) VALUES (4, 'Winter', 76, 100);");
         $this->addSql("INSERT INTO social_class (id, name, starting_cash, min_roll, max_roll) VALUES (1, 'Lowborn', '3D10+3 brass pennies (bp)', 1, 60);");
         $this->addSql("INSERT INTO social_class (id, name, starting_cash, min_roll, max_roll) VALUES (2, 'Burgher', '2D10+2 silver shilling (ss)', 61, 90);");
         $this->addSql("INSERT INTO social_class (id, name, starting_cash, min_roll, max_roll) VALUES (3, 'Aristocrat', '1D10+1 gold crowns (gc)', 91, 100);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (1, 7, 'Cultured', 1, 14);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (2, 3, 'Forgotten', 15, 29);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (3, 2, 'Industrious', 30, 44);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (4, 1, 'Militant', 45, 59);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (5, 4, 'Opportunistic', 60, 74);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (6, 6, 'Reverent', 75, 89);");
-        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute_id, name, min_roll, max_roll) VALUES (7, 5, 'Scholastic', 90, 100);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (1, 7, 'Cultured', 1, 14);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (2, 3, 'Forgotten', 15, 29);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (3, 2, 'Industrious', 30, 44);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (4, 1, 'Militant', 45, 59);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (5, 4, 'Opportunistic', 60, 74);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (6, 6, 'Reverent', 75, 89);");
+        $this->addSql("INSERT INTO upbringing (id, favored_primary_attribute, name, min_roll, max_roll) VALUES (7, 5, 'Scholastic', 90, 100);");
         $this->addSql("INSERT INTO weight (id, build_type_id, ancestry_id, value, gender, min_roll, max_roll) VALUES (1, 1, 1, '72lb', 'f', 1, 10);");
         $this->addSql("INSERT INTO weight (id, build_type_id, ancestry_id, value, gender, min_roll, max_roll) VALUES (2, 2, 1, '82lb', 'f', 1, 10);");
         $this->addSql("INSERT INTO weight (id, build_type_id, ancestry_id, value, gender, min_roll, max_roll) VALUES (3, 3, 1, '101lb', 'f', 1, 10);");
@@ -1445,6 +1412,12 @@ final class Version20190824101544 extends AbstractMigration
         $this->addSql("INSERT INTO weight (id, build_type_id, ancestry_id, value, gender, min_roll, max_roll) VALUES (598, 3, 6, '205lb', 'm', 91, 100);");
         $this->addSql("INSERT INTO weight (id, build_type_id, ancestry_id, value, gender, min_roll, max_roll) VALUES (599, 4, 6, '253lb', 'm', 91, 100);");
         $this->addSql("INSERT INTO weight (id, build_type_id, ancestry_id, value, gender, min_roll, max_roll) VALUES (600, 5, 6, '301lb', 'm', 91, 100);");
-        $this->addSql('SET FOREIGN_KEY_CHECKS=1;');
+
+    }
+
+    public function down(Schema $schema) : void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+
     }
 }

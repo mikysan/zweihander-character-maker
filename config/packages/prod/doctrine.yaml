@@ -10,8 +10,6 @@ doctrine:
         result_cache_driver:
             type: service
             id: doctrine.result_cache_provider
-    dbal:
-        url: '%env(resolve:JAWSDB_URL)%'
 
 services:
     doctrine.result_cache_provider:
