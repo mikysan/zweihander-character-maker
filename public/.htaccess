@@ -33,6 +33,7 @@ DirectoryIndex index.php
     # Enables CORS
     Header add Access-Control-Allow-Origin "*"
     Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+    Header add Access-Control-Expose-Headers: "X-Character-Token"
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the
