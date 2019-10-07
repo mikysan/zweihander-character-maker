@@ -81,6 +81,16 @@ class CharacterController extends AbstractController
     }
 
     /**
+     * Action that allow client preflight.
+     * todo: handle prflights with listner maybe?
+     * @Route("/save", name="_save_preflight", methods={"OPTIONS"})
+     */
+    public function savePreflight()
+    {
+        return new Response(NULL, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
      * @Route("/{id}", name="_show", methods={"GET"})
      */
     public function show(Character $character)
