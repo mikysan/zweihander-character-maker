@@ -34,6 +34,7 @@ DirectoryIndex index.php
     Header add Access-Control-Allow-Origin "*"
     Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
     Header add Access-Control-Allow-Headers: "X-Character-Token, Content-Type"
+    Header add Access-Control-Allow-Credentials: true
     Header add Access-Control-Expose-Headers: "X-Character-Token"
 
     # Determine the RewriteBase automatically and set it as environment variable.
