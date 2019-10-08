@@ -16,6 +16,9 @@ services:
             - .docker/data/postgre:/var/lib/postgresql/data
         environment:
             POSTGRES_PASSWORD: sf4
+    redis:
+      image: redis
+      container_name: sf4_redis
 
     php:
         build: .docker/php
@@ -24,3 +27,4 @@ services:
           - .:/home/www/sf4
         depends_on:
           - postgres
+          - redis
