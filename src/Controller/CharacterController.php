@@ -83,11 +83,11 @@ class CharacterController extends AbstractController
             throw new BadRequestHttpException('Missing required HTTP Header: X-Character-Token.');
         }
 
-        $cToken = $request->headers->get('X-Character-Token');
-        if (!$cache->hasItem('c_' . $cToken)) {
+        $cToken = 'c_'.$request->headers->get('X-Character-Token');
+        if (!$cache->hasItem($cToken)) {
             throw new NotFoundHttpException();
         }
-        $character = $cache->get('c_' . $cToken, function () {
+        $character = $cache->get($cToken, function () {
             throw new ServiceUnavailableHttpException();
         });
 
@@ -99,10 +99,12 @@ class CharacterController extends AbstractController
         if (null === $newCharacterName) {
             throw new BadRequestHttpException('Name is mandatory.');
         }
+        $character->setName($newCharacterName);
 
         //todo handle mercy rule
         $entityManager->persist($character);
         $entityManager->flush();
+        $cache->deleteItem($cToken);
 
         return $this->json($character, Response::HTTP_CREATED);
     }
