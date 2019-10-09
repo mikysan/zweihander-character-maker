@@ -2,6 +2,7 @@ FROM debian:stretch
 
 ENV HTTPD_PREFIX /usr/local/apache2
 ENV PATH $HTTPD_PREFIX/bin:$PATH
+
 RUN mkdir -p "$HTTPD_PREFIX" \
     && chown www-data:www-data "$HTTPD_PREFIX"
 WORKDIR $HTTPD_PREFIX

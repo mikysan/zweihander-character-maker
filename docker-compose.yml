@@ -5,6 +5,7 @@ services:
         container_name: sf4_apache
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .docker/config/certs:/etc/apache2/ssl
           - .:/home/www/sf4
         depends_on:
           - php
