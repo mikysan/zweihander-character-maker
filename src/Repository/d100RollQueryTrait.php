@@ -5,16 +5,17 @@ namespace App\Repository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * Class d100RollQueryTrait
- * @package App\Repository
+ * Class d100RollQueryTrait.
  */
 trait d100RollQueryTrait
 {
     /**
      * @param int|null $roll
+     *
      * @return mixed
      *
      * note this is intended to explode if get more than one result or no-result
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

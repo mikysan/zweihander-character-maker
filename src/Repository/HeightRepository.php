@@ -25,17 +25,19 @@ class HeightRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $sex
+     * @param string   $sex
      * @param Ancestry $ancestry
      * @param int|null $roll
      *
      * @return Height
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByRoll(string $sex, Ancestry $ancestry, ?int &$roll = NULL)
+    public function findByRoll(string $sex, Ancestry $ancestry, ?int &$roll = null)
     {
         $qb = $this->findByRollQb($roll);
+
         return $qb
             ->andWhere($qb->expr()->eq('q.ancestry', ':ancestry'))
             ->andWhere($qb->expr()->eq('q.gender', ':sex'))

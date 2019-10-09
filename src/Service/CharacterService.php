@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service;
-
 
 use App\Entity\AgeGroup;
 use App\Entity\AncestralTrait;
@@ -50,17 +48,18 @@ class CharacterService
         $seasonOfBirth = $this->entityManager->getRepository(Season::class)->findByRoll();
         $ageGroup = $this->entityManager->getRepository(AgeGroup::class)->findByRoll();
         $distinguishingMarks = [];
-        for ($i = 0; $i < $ageGroup->getDistinguishingMarkCoefficient(); $i++) {
+        for ($i = 0; $i < $ageGroup->getDistinguishingMarkCoefficient(); ++$i) {
             $distinguishingMark = $this->entityManager->getRepository(DistinguishingMark::class)->findByRoll();
             if (in_array($distinguishingMark->getName(), $distinguishingMarks)) {
-                $i--;
+                --$i;
+
                 continue;
             }
             $distinguishingMarks[] = $distinguishingMark->getName();
         }
         $buildType = $this->entityManager->getRepository(BuildType::class)->findByRoll();
         $hwRoll = null;
-        $sex = mt_rand(1, 2) % 2 === 0 ? 'm' : 'f';
+        $sex = 0 === mt_rand(1, 2) % 2 ? 'm' : 'f';
         $archetype = $this->entityManager->getRepository(Archetype::class)->findByRoll();
 
         $alignmentRoll = null;
@@ -99,6 +98,4 @@ class CharacterService
             $archetype->getArmor()
         );
     }
-
-
 }

@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CharacterRepository")
  * @ORM\Table(name="`character`")
@@ -224,7 +223,7 @@ class Character
 
     const GENDERS = [
         'm' => 'Male',
-        'f' => 'Female'
+        'f' => 'Female',
     ];
 
     public function __construct(
@@ -257,8 +256,7 @@ class Character
         string $trappings,
         Armor $armor,
         ?string $name = null
-    )
-    {
+    ) {
         $this->ageGroup = $ageGroup;
         $this->ancestry = $ancestry;
         $this->buildType = $buildType;
@@ -297,7 +295,7 @@ class Character
         $willpowerBonus = floor($willpower / 10);
         $fellowshipBonus = floor($fellowship / 10);
         foreach ($ancestry->getAncestryModifiers() as $modifier) {
-            $attributeBonusName = strtolower(PrimaryAttribute::ATTRIBUTE_NAMES[$modifier->getPrimaryAttribute()]) . 'Bonus';
+            $attributeBonusName = strtolower(PrimaryAttribute::ATTRIBUTE_NAMES[$modifier->getPrimaryAttribute()]).'Bonus';
             isset($$attributeBonusName) && $$attributeBonusName = $$attributeBonusName + $modifier->getValue();
         }
 
@@ -393,6 +391,7 @@ class Character
     /**
      * @Serializer\Groups("view")
      * @Serializer\SerializedName("distinguishingMarks")
+     *
      * @return string[]
      */
     public function getDistinguishingMark(): ?array

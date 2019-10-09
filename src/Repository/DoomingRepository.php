@@ -25,16 +25,18 @@ class DoomingRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Season $season
+     * @param Season   $season
      * @param int|null $roll
      *
      * @return Dooming
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByRoll(Season $season, ?int &$roll = NULL)
+    public function findByRoll(Season $season, ?int &$roll = null)
     {
         $qb = $this->findByRollQb($roll);
+
         return $qb
             ->andWhere($qb->expr()->eq('q.season', ':season'))
             ->setParameter('season', $season)

@@ -26,15 +26,17 @@ class ProfessionRepository extends ServiceEntityRepository
 
     /**
      * @param Archetype $archetype
-     * @param int|null $roll
+     * @param int|null  $roll
      *
      * @return Profession
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByRoll(Archetype $archetype, ?int &$roll = NULL)
+    public function findByRoll(Archetype $archetype, ?int &$roll = null)
     {
         $qb = $this->findByRollQb($roll);
+
         return $qb
             ->andWhere($qb->expr()->eq('q.archetype', ':archetype'))
             ->setParameter('archetype', $archetype)

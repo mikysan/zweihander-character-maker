@@ -29,12 +29,14 @@ class EyeColorRepository extends ServiceEntityRepository
      * @param int|null $roll
      *
      * @return EyeColor
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByRoll(Ancestry $ancestry, ?int &$roll = NULL)
+    public function findByRoll(Ancestry $ancestry, ?int &$roll = null)
     {
         $qb = $this->findByRollQb($roll);
+
         return $qb
             ->andWhere($qb->expr()->eq('q.ancestry', ':ancestry'))
             ->setParameter('ancestry', $ancestry)

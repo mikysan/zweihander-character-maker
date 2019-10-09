@@ -26,18 +26,20 @@ class WeightRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $sex
-     * @param Ancestry $ancestry
+     * @param string    $sex
+     * @param Ancestry  $ancestry
      * @param BuildType $buildType
-     * @param int|null $roll
+     * @param int|null  $roll
      *
      * @return Weight
+     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByRoll(string $sex, Ancestry $ancestry, BuildType $buildType, ?int &$roll = NULL)
+    public function findByRoll(string $sex, Ancestry $ancestry, BuildType $buildType, ?int &$roll = null)
     {
         $qb = $this->findByRollQb($roll);
+
         return $qb
             ->andWhere($qb->expr()->eq('q.ancestry', ':ancestry'))
             ->andWhere($qb->expr()->eq('q.gender', ':sex'))

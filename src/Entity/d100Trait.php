@@ -8,12 +8,14 @@ trait d100Trait
 {
     /**
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $minRoll;
 
     /**
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     private $maxRoll;

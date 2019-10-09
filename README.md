@@ -56,7 +56,7 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 ## TODO
 
 * add serving frontend on index
-* add cs fixer
+* add build pipeline with ecs check
 * add tests
 * add phpstan
 * support the "Mercy Rule"

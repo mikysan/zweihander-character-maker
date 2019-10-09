@@ -16,8 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\ItemInterface;
 
 /**
- * Class CharacterController
- * @package App\Controller
+ * Class CharacterController.
+ *
  * @Route("/characters", name="character")
  */
 class CharacterController extends AbstractController
@@ -38,30 +38,30 @@ class CharacterController extends AbstractController
     public function rollNew(CharacterService $characterService, Request $request, AdapterInterface $cache)
     {
         $tokenGenerator = function () {
-            return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
                 // 32 bits for "time_low"
-                mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff),
 
                 // 16 bits for "time_mid"
-                mt_rand( 0, 0xffff ),
+                mt_rand(0, 0xffff),
 
                 // 16 bits for "time_hi_and_version",
                 // four most significant bits holds version number 4
-                mt_rand( 0, 0x0fff ) | 0x4000,
+                mt_rand(0, 0x0fff) | 0x4000,
 
                 // 16 bits, 8 bits for "clk_seq_hi_res",
                 // 8 bits for "clk_seq_low",
                 // two most significant bits holds zero and one for variant DCE1.1
-                mt_rand( 0, 0x3fff ) | 0x8000,
+                mt_rand(0, 0x3fff) | 0x8000,
 
                 // 48 bits for "node"
-                mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
             );
         };
 
         // We actually use cache as temp storage
         $cToken = $tokenGenerator();
-        $newCharacter = $cache->get('c_' . $tokenGenerator(), function (ItemInterface $item) use ($characterService, $request) {
+        $newCharacter = $cache->get('c_'.$tokenGenerator(), function (ItemInterface $item) use ($characterService, $request) {
             $item->expiresAfter(86400); //expires after 1 day.
 
             return $characterService->rollNew(
@@ -112,11 +112,12 @@ class CharacterController extends AbstractController
     /**
      * Action that allow client preflight.
      * todo: handle prflights with listner maybe?
+     *
      * @Route("/save", name="_save_preflight", methods={"OPTIONS"})
      */
     public function savePreflight()
     {
-        return new Response(NULL, Response::HTTP_NO_CONTENT);
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**

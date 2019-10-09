@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Character;
-use App\Entity\DistinguishingMark;
 use App\Service\CharacterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -25,7 +24,7 @@ class RollCharacterCommand extends Command
      */
     private $entityManager;
 
-    public function __construct(CharacterService $characterService, EntityManagerInterface $entityManager, string $name = NULL)
+    public function __construct(CharacterService $characterService, EntityManagerInterface $entityManager, string $name = null)
     {
         $this->entityManager = $entityManager;
         $this->characterService = $characterService;
@@ -52,20 +51,20 @@ class RollCharacterCommand extends Command
 
         $io->title('Step II: Primary Attributes');
         $io->listing([
-            sprintf("Combat: <info>%s</info> [CB <info>%s</info>]", $newCharacter->getCombat(), $newCharacter->getCombatBonus()),
-            sprintf("Brawn: <info>%s</info> [BB <info>%s</info>]", $newCharacter->getBrawn(), $newCharacter->getBrawnBonus()),
-            sprintf("Agility: <info>%s</info> [AB <info>%s</info>]", $newCharacter->getAgility(), $newCharacter->getAgilityBonus()),
-            sprintf("Perception: <info>%s</info> [PB <info>%s</info>]", $newCharacter->getPerception(), $newCharacter->getPerceptionBonus()),
-            sprintf("Intelligence: <info>%s</info> [IB <info>%s</info>]", $newCharacter->getIntelligence(), $newCharacter->getIntelligenceBonus()),
-            sprintf("Willpower: <info>%s</info> [WB <info>%s</info>]", $newCharacter->getWillpower(), $newCharacter->getWillpowerBonus()),
-            sprintf("Fellowship: <info>%s</info> [FB <info>%s</info>]", $newCharacter->getFellowship(), $newCharacter->getFellowshipBonus()),
+            sprintf('Combat: <info>%s</info> [CB <info>%s</info>]', $newCharacter->getCombat(), $newCharacter->getCombatBonus()),
+            sprintf('Brawn: <info>%s</info> [BB <info>%s</info>]', $newCharacter->getBrawn(), $newCharacter->getBrawnBonus()),
+            sprintf('Agility: <info>%s</info> [AB <info>%s</info>]', $newCharacter->getAgility(), $newCharacter->getAgilityBonus()),
+            sprintf('Perception: <info>%s</info> [PB <info>%s</info>]', $newCharacter->getPerception(), $newCharacter->getPerceptionBonus()),
+            sprintf('Intelligence: <info>%s</info> [IB <info>%s</info>]', $newCharacter->getIntelligence(), $newCharacter->getIntelligenceBonus()),
+            sprintf('Willpower: <info>%s</info> [WB <info>%s</info>]', $newCharacter->getWillpower(), $newCharacter->getWillpowerBonus()),
+            sprintf('Fellowship: <info>%s</info> [FB <info>%s</info>]', $newCharacter->getFellowship(), $newCharacter->getFellowshipBonus()),
         ]);
 
         $io->title('Step III: Sex & Race');
         $io->writeln(sprintf('<info>%s %s</info>', Character::GENDERS[$newCharacter->getSex()], $newCharacter->getAncestryName()));
         $io->section('Ancestral trait');
-        $io->writeln('<info>' . $newCharacter->getAncestralTrait()->getName() . '</info>');
-        $io->writeln('effect: ' . $newCharacter->getAncestralTrait()->getEffect());
+        $io->writeln('<info>'.$newCharacter->getAncestralTrait()->getName().'</info>');
+        $io->writeln('effect: '.$newCharacter->getAncestralTrait()->getEffect());
 
         $io->title('Step IV: Archetype & Profession');
         $io->writeln(sprintf('Profession: <info>%s</info>', $newCharacter->getProfessionName()));
@@ -120,7 +119,7 @@ class RollCharacterCommand extends Command
             $io->writeln('<error>There\'s no mercy</error>'); //todo mercy rule.
         }
 
-        if ($answer = $io->ask('Write a name for your character', 'Mario Rossi')){
+        if ($answer = $io->ask('Write a name for your character', 'Mario Rossi')) {
             $newCharacter->setName($answer);
         }
 

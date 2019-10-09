@@ -52,6 +52,7 @@ class Upbringing
         if (null === $this->favoredPrimaryAttribute) {
             throw new  RuntimeException('Invalid Upbringing object');
         }
+
         return PrimaryAttribute::ATTRIBUTE_NAMES[$this->favoredPrimaryAttribute];
     }
 }
