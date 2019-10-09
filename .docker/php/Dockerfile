@@ -7,13 +7,17 @@ RUN apt-get update \
     zlib1g-dev \
     sudo
 
-# Install Postgre PDO
 RUN apt-get update
 
 # Install Postgre PDO
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
+
+# Install Redis
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
 
 COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm-pool.conf 	/usr/local/etc/php/pool.d/www.conf

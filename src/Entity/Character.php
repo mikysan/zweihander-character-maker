@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation as Serializer;
 
@@ -311,6 +312,78 @@ class Character
         $this->fatePoints = $drawback ? 2 : 1;
 
         $this->name = $name;
+    }
+
+    public function dumpFactoryArguments(): array
+    {
+        return [
+            'id' => $this->id,
+            'ancestry' => $this->ancestry->getId(),
+            'ancestralTrait' => $this->ancestralTrait->getId(),
+            'sex' => $this->sex,
+            'profession' => $this->profession->getId(),
+            'buildType' => $this->buildType->getId(),
+            'complexion' => $this->complexion->getId(),
+            'eyeColor' => $this->eyeColor->getId(),
+            'hairColor' => $this->hairColor->getId(),
+            'height' => $this->height->getId(),
+            'weight' => $this->weight->getId(),
+            'ageGroup' => $this->ageGroup->getId(),
+            'distinguishingMarks' => json_encode($this->distinguishingMarks),
+            'seasonOfBirth' => $this->seasonOfBirth->getId(),
+            'dooming' => $this->dooming->getId(),
+            'chaosAlignment' => $this->chaosAlignment->getId(),
+            'orderAlignment' => $this->orderAlignment->getId(),
+            'drawback' => $this->drawback ? $this->drawback->getId() : null,
+            'socialClass' => $this->socialClass->getId(),
+            'upbringing' => $this->upbringing->getId(),
+            'combat' => $this->combat,
+            'brawn' => $this->brawn,
+            'agility' => $this->agility,
+            'perception' => $this->perception,
+            'intelligence' => $this->intelligence,
+            'willpower' => $this->willpower,
+            'fellowship' => $this->fellowship,
+            'trappings' => $this->trappings,
+            'armor' => $this->armor->getId(),
+            'name' => $this->name
+        ];
+    }
+
+    public static function createByReferenceArray(array $references, EntityManagerInterface $entityManager)
+    {
+        return new self(
+            $entityManager->getReference(Ancestry::class, $references['ancestry']),
+            $entityManager->getReference(AncestralTrait::class, $references['ancestralTrait']),
+            $references['sex'],
+            $entityManager->getReference(Profession::class, $references['profession']),
+            $entityManager->getReference(BuildType::class, $references['buildType']),
+            $entityManager->getReference(Complexion::class, $references['complexion']),
+            $entityManager->getReference(EyeColor::class, $references['eyeColor']),
+            $entityManager->getReference(HairColor::class, $references['hairColor']),
+            $entityManager->getReference(Height::class, $references['height']),
+            $entityManager->getReference(Weight::class, $references['weight']),
+            $entityManager->getReference(AgeGroup::class, $references['ageGroup']),
+            explode('|', $references['distinguishingMarks']),
+            $entityManager->getReference(Season::class, $references['seasonOfBirth']),
+            $entityManager->getReference(Dooming::class, $references['dooming']),
+            $entityManager->getReference(ChaosAlignment::class, $references['chaosAlignment']),
+            $entityManager->getReference(OrderAlignment::class, $references['orderAlignment']),
+            $references['drawback'] ? $entityManager->getReference(Drawback::class, $references['drawback']) : null,
+            $entityManager->getReference(SocialClass::class, $references['socialClass']),
+            $entityManager->getReference(Upbringing::class, $references['upbringing']),
+            $references['combat'],
+            $references['brawn'],
+            $references['agility'],
+            $references['perception'],
+            $references['intelligence'],
+            $references['willpower'],
+            $references['fellowship'],
+            $references['trappings'],
+            $entityManager->getReference(Armor::class, $references['armor']),
+            $references['name']
+        );
+
     }
 
     /**

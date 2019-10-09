@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Character;
 use App\Service\CharacterService;
+use App\Service\RedisService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -11,9 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * Class CharacterController.
@@ -61,15 +60,19 @@ class CharacterController extends AbstractController
 
         // We actually use cache as temp storage
         $cToken = $tokenGenerator();
-        $newCharacter = $cache->get('c_' . $tokenGenerator(), function (ItemInterface $item) use ($characterService, $request) {
-            $item->expiresAfter(86400); //expires after 1 day.
+        $newCharacter = $characterService->rollNew(
+            $request->query->has('roll-drawback'),
+            $request->query->has('roll-ancestry'),
+            $request->query->has('unlink-alignment')
+        );
 
-            return $characterService->rollNew(
-                $request->query->has('roll-drawback'),
-                $request->query->has('roll-ancestry'),
-                $request->query->has('unlink-alignment')
-            );
-        });
+        $newCharacterCacheItem = $cache->getItem('c_' . $cToken);
+
+        if (!$newCharacterCacheItem->isHit()) {
+            $newCharacterCacheItem->set($newCharacter->dumpFactoryArguments());
+            $newCharacterCacheItem->expiresAfter(86400);
+            $cache->save($newCharacterCacheItem);
+        }
 
         return $this->json($newCharacter, Response::HTTP_OK, ['X-Character-Token' => $cToken], ['groups' => ['view']]);
     }
@@ -87,19 +90,19 @@ class CharacterController extends AbstractController
         if (null === $cToken || is_array($cToken)) {
             throw new BadRequestHttpException('Required HTTP Header "X-Character-Token" must be sent only once.');
         }
-        $cToken = 'c_' . $cToken;
-        if (!$cache->hasItem($cToken)) {
+        $newCharacterCacheItem = $cache->getItem('c_' . $cToken);
+
+        if (!$newCharacterCacheItem->isHit()) {
             throw new NotFoundHttpException();
         }
-        $character = $cache->get($cToken, function () {
-            throw new ServiceUnavailableHttpException();
-        });
 
+        $character = Character::createByReferenceArray($newCharacterCacheItem->get(), $entityManager);
         if (!$character instanceof Character) {
-            throw new ServiceUnavailableHttpException();
+            throw new NotFoundHttpException();
         }
 
-        $newCharacterName = $request->request->get('name', null);
+        $payload = json_decode($request->getContent(), true);
+        $newCharacterName = $payload['name'] ?? null;
         if (null === $newCharacterName) {
             throw new BadRequestHttpException('Name is mandatory.');
         }
@@ -108,9 +111,8 @@ class CharacterController extends AbstractController
         //todo handle mercy rule
         $entityManager->persist($character);
         $entityManager->flush();
-        $cache->deleteItem($cToken);
 
-        return $this->json($character, Response::HTTP_CREATED);
+        return $this->json($character, Response::HTTP_CREATED, [], ['groups' => ['view']]);
     }
 
     /**
