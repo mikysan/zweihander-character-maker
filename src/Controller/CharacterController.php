@@ -61,7 +61,7 @@ class CharacterController extends AbstractController
 
         // We actually use cache as temp storage
         $cToken = $tokenGenerator();
-        $newCharacter = $cache->get('c_'.$tokenGenerator(), function (ItemInterface $item) use ($characterService, $request) {
+        $newCharacter = $cache->get('c_' . $tokenGenerator(), function (ItemInterface $item) use ($characterService, $request) {
             $item->expiresAfter(86400); //expires after 1 day.
 
             return $characterService->rollNew(
@@ -83,7 +83,11 @@ class CharacterController extends AbstractController
             throw new BadRequestHttpException('Missing required HTTP Header: X-Character-Token.');
         }
 
-        $cToken = 'c_'.$request->headers->get('X-Character-Token');
+        $cToken = $request->headers->get('X-Character-Token');
+        if (null === $cToken || is_array($cToken)) {
+            throw new BadRequestHttpException('Required HTTP Header "X-Character-Token" must be sent only once.');
+        }
+        $cToken = 'c_' . $cToken;
         if (!$cache->hasItem($cToken)) {
             throw new NotFoundHttpException();
         }

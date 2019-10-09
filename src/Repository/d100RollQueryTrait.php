@@ -12,7 +12,7 @@ trait d100RollQueryTrait
     /**
      * @param int|null $roll
      *
-     * @return object
+     * @return mixed
      *
      * note this is intended to explode if get more than one result or no-result
      *
