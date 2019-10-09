@@ -44,7 +44,7 @@ class RollCharacterCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $newCharacter = $this->characterService->rollNew($input->getOption('roll-drawback'), $input->getOption('roll-ancestry'), $input->getOption('unlink-alignment'));
+        $newCharacter = $this->characterService->rollNew((bool) $input->getOption('roll-drawback'), (bool) $input->getOption('roll-ancestry'), (bool) $input->getOption('unlink-alignment'));
 
         $io->title('Step I: Begin Basic Tier');
         $io->text('You begin in basic Tier.');
@@ -88,7 +88,7 @@ class RollCharacterCommand extends Command
         $io->writeln(sprintf('Age group: <info>%s</info>', $newCharacter->getAgeGroupName()));
         if ($newCharacter->hasDistinguishingMarks()) {
             $io->writeln('Distinguishing marks:');
-            $io->listing($newCharacter->getDistinguishingMark());
+            $io->listing((array) $newCharacter->getDistinguishingMark());
         }
         $io->writeln(sprintf('Complexion: <info>%s</info>', $newCharacter->getComplexionName()));
         $io->writeln(sprintf('Build type : <info>%s</info> (%s%% price modifier)', $newCharacter->getBuildType()->getName(), $newCharacter->getBuildType()->getPriceModifier() * 100));
@@ -98,8 +98,9 @@ class RollCharacterCommand extends Command
         $io->writeln(sprintf('Eye color: <info>%s</info>', $newCharacter->getEyeColorValue()));
         $io->writeln(sprintf('Upbringing: <info>%s</info> [favorite attribute: <info>%s</info>]', $newCharacter->getUpbringing()->getName(), $newCharacter->getUpbringing()->getFavoredPrimaryAttributeName()));
         $io->writeln(sprintf('Social class: <info>%s</info>', $newCharacter->getSocialClassName()));
-        if ($newCharacter->getDrawback()) {
-            $io->writeln(sprintf('Drawback: <info>%s</info> %s', $newCharacter->getDrawback()->getName(), $newCharacter->getDrawback()->getEffect()));
+        $drawback = $newCharacter->getDrawback();
+        if (null !== $drawback) {
+            $io->writeln(sprintf('Drawback: <info>%s</info> %s', $drawback->getName(), $drawback->getEffect()));
         }
 
         $io->title('Step VII: Hand Of Fate');

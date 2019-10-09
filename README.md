@@ -53,12 +53,23 @@ docker exec -it -u dev sf4_php bin/console d:m:m
 ```
 > You may need to run `docker exec -it -u dev sf4_php php bin/console d:m:m` with the explicitly use of *php* binary, if so you will need to do so any time you will use the `bin/console` commands.
 
+## Coding Standard
+
+In order to check if the code is healthy and compliant with adopted standards run `easy-coding-standard` and `phpstan`
+```shell script
+docker exec -it -u dev sf4_php vendor/bin/ecs check src/
+docker exec -it -u dev sf4_php vendor/bin/ecs check tests/
+```
+```shell script
+docker exec -it -u dev sf4_php vendor/bin/phpstan analyse src tests
+```
+
 ## TODO
 
 * add serving frontend on index
 * add build pipeline with ecs check
+* add build pipeline with phpstan
 * add tests
-* add phpstan
 * support the "Mercy Rule"
 * allow to choose "Random" choice between human or demi-human (this should be also the default option)
 * add roll character cash

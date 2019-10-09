@@ -1,0 +1,10 @@
+parameters:
+    level: 7
+    bootstrap: %currentWorkingDirectory%/config/bootstrap.php
+    autoload_directories:
+        - %rootDir%/../../../src/Migrations
+    autoload_files:
+        - ./bin/.phpunit/phpunit-7.5/vendor/autoload.php
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon

@@ -45,6 +45,9 @@ class CharacterService
         }
         $ancestryRepository = $this->entityManager->getRepository(Ancestry::class);
         $ancestry = $rollAncestry ? $ancestryRepository->findByRoll() : $ancestryRepository->findOneBy(['name' => 'Human']);
+        if (null === $ancestry) {
+            throw new \Exception('Required data is missing on database.');
+        }
         $seasonOfBirth = $this->entityManager->getRepository(Season::class)->findByRoll();
         $ageGroup = $this->entityManager->getRepository(AgeGroup::class)->findByRoll();
         $distinguishingMarks = [];
@@ -64,7 +67,9 @@ class CharacterService
 
         $alignmentRoll = null;
         $orderAlignment = $this->entityManager->getRepository(OrderAlignment::class)->findByRoll($alignmentRoll);
-        $unlinkAlignment && $alignmentRoll = null;
+        if ($unlinkAlignment) {
+            $alignmentRoll = null;
+        }
         $chaosAlignment = $this->entityManager->getRepository(ChaosAlignment::class)->findByRoll($alignmentRoll);
 
         return new Character(
