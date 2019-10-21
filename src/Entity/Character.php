@@ -346,7 +346,7 @@ class Character
             'fellowship' => $this->fellowship,
             'trappings' => $this->trappings,
             'armor' => $this->armor->getId(),
-            'name' => $this->name
+            'name' => $this->name,
         ];
     }
 
@@ -383,7 +383,6 @@ class Character
             $entityManager->getReference(Armor::class, $references['armor']),
             $references['name']
         );
-
     }
 
     /**

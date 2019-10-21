@@ -66,15 +66,16 @@ docker exec -it -u dev sf4_php vendor/bin/phpstan analyse src tests
 
 ## TODO
 
-* add serving frontend on index
+* hateoas with willdurand/hateoas-bundle
 * add build pipeline with ecs check
 * add build pipeline with phpstan
 * add tests
+* add cache (?)
 * support the "Mercy Rule"
 * allow to choose "Random" choice between human or demi-human (this should be also the default option)
 * add roll character cash
-* add consider talent, trait or magick modifier to secondary attribute
 * add export character pdf sheet
+* add consider talent, trait or magick modifier to secondary attribute
 * add switch from metric system to imperial system (?)
 * add multilanguage (?)
 

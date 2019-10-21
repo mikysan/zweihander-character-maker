@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Character;
 use App\Service\CharacterService;
-use App\Service\RedisService;
+use Ramsey\Uuid\Uuid;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
@@ -36,37 +36,15 @@ class CharacterController extends AbstractController
      */
     public function rollNew(CharacterService $characterService, Request $request, AdapterInterface $cache)
     {
-        $tokenGenerator = function () {
-            return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                // 32 bits for "time_low"
-                mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-
-                // 16 bits for "time_mid"
-                mt_rand(0, 0xffff),
-
-                // 16 bits for "time_hi_and_version",
-                // four most significant bits holds version number 4
-                mt_rand(0, 0x0fff) | 0x4000,
-
-                // 16 bits, 8 bits for "clk_seq_hi_res",
-                // 8 bits for "clk_seq_low",
-                // two most significant bits holds zero and one for variant DCE1.1
-                mt_rand(0, 0x3fff) | 0x8000,
-
-                // 48 bits for "node"
-                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-            );
-        };
-
         // We actually use cache as temp storage
-        $cToken = $tokenGenerator();
+        $cToken = Uuid::uuid4();
         $newCharacter = $characterService->rollNew(
             $request->query->has('roll-drawback'),
             $request->query->has('roll-ancestry'),
             $request->query->has('unlink-alignment')
         );
 
-        $newCharacterCacheItem = $cache->getItem('c_' . $cToken);
+        $newCharacterCacheItem = $cache->getItem('c_'.$cToken->toString());
 
         if (!$newCharacterCacheItem->isHit()) {
             $newCharacterCacheItem->set($newCharacter->dumpFactoryArguments());
@@ -74,11 +52,11 @@ class CharacterController extends AbstractController
             $cache->save($newCharacterCacheItem);
         }
 
-        return $this->json($newCharacter, Response::HTTP_OK, ['X-Character-Token' => $cToken], ['groups' => ['view']]);
+        return $this->json($newCharacter, Response::HTTP_OK, ['X-Character-Token' => $cToken->toString()], ['groups' => ['view']]);
     }
 
     /**
-     * @Route("/save", name="_save", methods={"POST"})
+     * @Route("/save", name="_save", methods={"POST", "OPTIONS"})
      */
     public function save(Request $request, AdapterInterface $cache, EntityManagerInterface $entityManager)
     {
@@ -90,7 +68,7 @@ class CharacterController extends AbstractController
         if (null === $cToken || is_array($cToken)) {
             throw new BadRequestHttpException('Required HTTP Header "X-Character-Token" must be sent only once.');
         }
-        $newCharacterCacheItem = $cache->getItem('c_' . $cToken);
+        $newCharacterCacheItem = $cache->getItem('c_'.$cToken);
 
         if (!$newCharacterCacheItem->isHit()) {
             throw new NotFoundHttpException();
@@ -101,7 +79,7 @@ class CharacterController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $payload = json_decode($request->getContent(), true);
+        $payload = json_decode((string) $request->getContent(), true);
         $newCharacterName = $payload['name'] ?? null;
         if (null === $newCharacterName) {
             throw new BadRequestHttpException('Name is mandatory.');
@@ -113,17 +91,6 @@ class CharacterController extends AbstractController
         $entityManager->flush();
 
         return $this->json($character, Response::HTTP_CREATED, [], ['groups' => ['view']]);
-    }
-
-    /**
-     * Action that allow client preflight.
-     * todo: handle prflights with listner maybe?
-     *
-     * @Route("/save", name="_save_preflight", methods={"OPTIONS"})
-     */
-    public function savePreflight()
-    {
-        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
