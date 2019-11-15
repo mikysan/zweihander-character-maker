@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -99,5 +100,19 @@ class CharacterController extends AbstractController
     public function show(Character $character)
     {
         return $this->json($character, Response::HTTP_OK, [], ['groups' => ['view']]);
+    }
+
+    /**
+     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     */
+    public function delete(Character $character, EntityManagerInterface $em)
+    {
+        if (!$this->isGranted('DELETE', $character)) {
+            throw new AccessDeniedHttpException();
+        }
+        $em->remove($character);
+        $em->flush();
+
+        return new Response();
     }
 }
